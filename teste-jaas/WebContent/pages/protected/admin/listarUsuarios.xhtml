@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+ 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+ 
+        <h:messages />
+        <h:dataTable value="#{usuarioBean.listaUsuarios}" var="usuario" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.usuarioLogin}
+                </f:facet>
+ 
+                #{usuario.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.usuarioNome}
+                </f:facet>
+ 
+                #{usuario.nome}
+            </h:column>
+            <h:column>
+                <h:panelGrid columns="2">
+                    <!-- Always save the id as hidden when you use a request scope MB -->
+                    <h:inputHidden value="#{usuario.login}" />
+ 
+                    <h:commandButton action="#{usuarioBean.atualizarUsuarioInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+                    </h:commandButton>
+                    <h:commandButton action="#{usuarioBean.deletarUsuarioInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:column>
+        </h:dataTable>
+        <!-- This button is displayed to the user, just to you see the error msg  -->
+        <h:commandButton action="incluirUsuario" value="#{msgs.incluir} #{msgs.usuario}" />
+    </h:form>
+</h:body>
+</html>

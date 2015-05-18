@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+        <h:messages/>
+
+        <h3>Incluindo anexo para documento #{documentoBean.documento.titulo}</h3>
+        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+        	<h:inputHidden value="#{arquivoAnexoBean.documento.id}" />
+            <h:outputLabel for="nomeArquivoAnexo" value="#{msgs.arquivoAnexoNome}" />
+            <h:inputText id="nomeArquivoAnexo" value="#{arquivoAnexoBean.arquivoAnexo.nome}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+ 
+            <h:outputLabel for="caminhoArquivoAnexo" value="#{msgs.arquivoAnexoCaminho}" />
+            <h:inputText id="caminhoArquivoAnexo" value="#{arquivoAnexoBean.arquivoAnexo.caminho}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+            <h:commandButton action="#{arquivoAnexoBean.incluirArquivoAnexoFim()}" value="#{msgs.incluir}" />
+            <h:commandButton action="#{arquivoAnexoBean.listarDocumentos()}" value="#{msgs.cancelar}" immediate="true" />
+        </h:panelGrid>
+        
+        <h:dataTable value="#{arquivoAnexoBean.listaArquivosAnexos}" var="arquivoAnexo" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.arquivoAnexoNome}
+                </f:facet>
+ 
+                #{arquivoAnexo.nome}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.arquivoAnexoCaminho}
+                </f:facet>
+ 
+                #{documento.caminho}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.arquivoAnexoDataInclusao}
+                </f:facet>
+ 
+ 				<h:outputLabel value="#{arquivoAnexo.dataInclusao.time}">
+         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+      			</h:outputLabel>
+            </h:column>
+		</h:dataTable>        
+        <br/>
+    </h:form>
+</h:body>
+</html>

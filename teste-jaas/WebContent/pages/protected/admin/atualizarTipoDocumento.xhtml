@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+        <h:messages/>
+ 
+        <h3>#{msgs.atualizarTipoDocumentoHeader}: #{tipoDocumentoBean.tipoDocumento.nomeTipo}</h3>
+        <h:inputHidden value="#{tipoDocumentoBean.tipoDocumento.id}" />
+        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+            <h:outputLabel for="tipoDocumentoTitulo" value="#{msgs.tipoDocumentoNome}" />
+            <h:inputText id="tipoDocumentoTitulo" value="#{tipoDocumentoBean.tipoDocumento.nomeTipo}" required="true" requiredMessage="#{msgs.nomeTipoDocumentoRequired}" />
+ 
+            <h:outputLabel for="tipoDocumentoDescricao" value="#{msgs.tipoDocumentoDescricao}" />
+            <h:inputText id="tipoDocumentoDescricao" value="#{tipoDocumentoBean.tipoDocumento.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+            <h:commandButton action="#{tipoDocumentoBean.atualizarTipoDocumentoFim()}" value="#{msgs.atualizar}" />
+            <h:commandButton action="#{tipoDocumentoBean.listarTiposDocumentos()}" value="#{msgs.cancelar}" immediate="true" />
+        </h:panelGrid>
+        <br/>
+    </h:form>
+</h:body>
+</html>

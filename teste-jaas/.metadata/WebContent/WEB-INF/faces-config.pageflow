@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14310930163200" configfile="/teste-jaas/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1138" id="pf14312706803252" outlinks="pf143127068451312 pf143127069110114 pf143127069110115 pf14313549018612 pf14315308606330 pf14315318872472 pf14315318872473 pf14315318872474 pf14315318872475 pf14316131333680 pf14316131333681 pf14316131333682 pf14316131333683 pf14316414701537" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/users/main.xhtml" x="122" y="1618" id="pf143127068032510" referenceLink="//@navigationRule.1/@fromViewId|" path="/pages/protected/users/main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/public/listarDocumentos.xhtml" x="338" y="562" id="pf143127068032511" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14313549018612" path="/pages/public/listarDocumentos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/users/incluirDocumento.xhtml" x="338" y="946" id="pf143127068451313" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf143127068451312" path="/pages/protected/users/incluirDocumento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/users/atualizarDocumento.xhtml" x="338" y="1330" id="pf143127069110116" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf143127069110114" path="/pages/protected/users/atualizarDocumento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/users/deletarDocumento.xhtml" x="338" y="1714" id="pf143127069110117" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf143127069110115" path="/pages/protected/users/deletarDocumento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/public/main.xhtml" id="pf14315308606331" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14315308606330" path="/pages/public/main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/listarTiposDocumentos.xhtml" id="pf14315318872476" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf14315318872472" path="/pages/protected/admin/listarTiposDocumentos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/incluirTipoDocumento.xhtml" id="pf14315318872477" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf14315318872473" path="/pages/protected/admin/incluirTipoDocumento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/atualizarTipoDocumento.xhtml" id="pf14315318872478" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf14315318872474" path="/pages/protected/admin/atualizarTipoDocumento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/deletarTipoDocumento.xhtml" id="pf14315318872479" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf14315318872475" path="/pages/protected/admin/deletarTipoDocumento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/listarUsuarios.xhtml" id="pf14316131333684" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf14316131333680" path="/pages/protected/admin/listarUsuarios.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/incluirUsuario.xhtml" id="pf14316131333685" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf14316131333681" path="/pages/protected/admin/incluirUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/atualizarUsuario.xhtml" id="pf14316131333686" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf14316131333682" path="/pages/protected/admin/atualizarUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/deletarUsuario.xhtml" id="pf14316131333687" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" inlinks="pf14316131333683" path="/pages/protected/admin/deletarUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/users/incluirArquivoAnexo.xhtml" id="pf14316414701538" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf14316414701537" path="/pages/protected/users/incluirArquivoAnexo.xhtml"/>
+  <links id="pf143127068451312" target="pf143127068451313" source="pf14312706803252" outcome="incluirDocumento" redirect="true"/>
+  <links id="pf143127069110114" target="pf143127069110116" source="pf14312706803252" outcome="atualizarDocumento"/>
+  <links id="pf143127069110115" target="pf143127069110117" source="pf14312706803252" outcome="deletarDocumento"/>
+  <links id="pf14313549018612" target="pf143127068032511" source="pf14312706803252" outcome="listarDocumentos"/>
+  <links id="pf14315308606330" target="pf14315308606331" source="pf14312706803252" outcome="logout" redirect="true"/>
+  <links id="pf14315318872472" target="pf14315318872476" source="pf14312706803252" outcome="listarTiposDocumentos"/>
+  <links id="pf14315318872473" target="pf14315318872477" source="pf14312706803252" outcome="incluirTiposDocumento" redirect="true"/>
+  <links id="pf14315318872474" target="pf14315318872478" source="pf14312706803252" outcome="atualizarTipoDocumento"/>
+  <links id="pf14315318872475" target="pf14315318872479" source="pf14312706803252" outcome="deletarTipoDocumento"/>
+  <links id="pf14316131333680" target="pf14316131333684" source="pf14312706803252" outcome="listarUsuarios"/>
+  <links id="pf14316131333681" target="pf14316131333685" source="pf14312706803252" outcome="incluirUsuario" redirect="true"/>
+  <links id="pf14316131333682" target="pf14316131333686" source="pf14312706803252" outcome="atualizarUsuario"/>
+  <links id="pf14316131333683" target="pf14316131333687" source="pf14312706803252" outcome="deletarUsuario"/>
+  <links id="pf14316414701537" target="pf14316414701538" source="pf14312706803252" outcome="incluirArquivoAnexo" redirect="true"/>
+</pageflow:Pageflow>

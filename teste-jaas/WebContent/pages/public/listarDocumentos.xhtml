@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+ 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+ 
+        <h:messages />
+        <h:dataTable value="#{documentoBean.listaDocumentos}" var="documento" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.documentoTipoDocumento}
+                </f:facet>
+ 
+                #{documento.tipoDocumento.nomeTipo}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.documentoTitulo}
+                </f:facet>
+ 
+                #{documento.titulo}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.documentoDescricao}
+                </f:facet>
+ 
+                #{documento.descricao}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.documentoUsuarioCriacao}
+                </f:facet>
+ 
+                #{documento.usuarioCriacao.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.documentoDataCriacao}
+                </f:facet>
+ 
+ 				<h:outputLabel value="#{documento.dataInclusao.time}">
+         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+      			</h:outputLabel>
+            </h:column>
+			<h:column>
+                <f:facet name="header">
+                    #{msgs.documentoUsuarioAlteracao}
+                </f:facet>
+ 
+                #{documento.usuarioAlteracao.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.documentoDataAlteracao}
+                </f:facet>
+ 
+ 				<h:outputLabel value="#{documento.dataAlteracao.time}">
+         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+      			</h:outputLabel>
+            </h:column>
+            <h:column>
+                <h:panelGrid columns="2">
+                    <!-- Always save the id as hidden when you use a request scope MB -->
+                    <h:inputHidden value="#{documento.id}" />
+ 
+                    <h:commandButton action="#{documentoBean.atualizarDocumentoInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioDigitador}" >
+                        <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
+                    </h:commandButton>
+                    <h:commandButton action="#{documentoBean.deletarDocumentoInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioDigitador}" >
+                        <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
+                    </h:commandButton>
+					<h:commandButton action="#{documentoBean.incluirArquivoAnexoInicio()}" value="#{msgs.incluirArquivoAnexo}" rendered="#{loginBean.usuarioDigitador}" >
+                        <f:setPropertyActionListener target="#{arquivoAnexoBean.documento}" value="#{documento}" />
+                    </h:commandButton>                    
+                </h:panelGrid>
+            </h:column>
+        </h:dataTable>
+        <!-- This button is displayed to the user, just to you see the error msg  -->
+        <h:commandButton action="incluirDocumento" value="#{msgs.incluir} #{msgs.documento}" />
+    </h:form>
+</h:body>
+</html>

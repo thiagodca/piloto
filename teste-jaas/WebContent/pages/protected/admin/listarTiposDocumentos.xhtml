@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+ 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+ 
+        <h:messages />
+        <h:dataTable value="#{tipoDocumentoBean.listaTiposDocumentos}" var="tipoDocumento" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.tipoDocumentoNome}
+                </f:facet>
+ 
+                #{tipoDocumento.nomeTipo}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.tipoDocumentoDescricao}
+                </f:facet>
+ 
+                #{tipoDocumento.descricao}
+            </h:column>
+            <h:column>
+                <h:panelGrid columns="2">
+                    <!-- Always save the id as hidden when you use a request scope MB -->
+                    <h:inputHidden value="#{tipoDocumento.id}" />
+ 
+                    <h:commandButton action="#{tipoDocumentoBean.atualizarTipoDocumentoInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
+                    </h:commandButton>
+                    <h:commandButton action="#{tipoDocumentoBean.deletarTipoDocumentoInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:column>
+        </h:dataTable>
+        <!-- This button is displayed to the user, just to you see the error msg  -->
+        <h:commandButton action="incluirTipoDocumento" value="#{msgs.incluir} #{msgs.tipoDocumento}" />
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+        <h:messages/>
+ 
+        <h3>#{msgs.atualizarUsuarioHeader}: #{usuarioBean.usuario.nome}</h3>
+        <h:inputHidden value="#{usuarioBean.usuario.login}" />
+        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+            <h:outputLabel for="usuarioNome" value="#{msgs.usuarioNome}" />
+            <h:inputText id="usuarioNome" value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="#{msgs.nomeUsuarioRequired}" />
+ 
+            <h:outputLabel for="usuarioSenha" value="#{msgs.usuarioSenha}" />
+            <h:inputSecret id="usuarioSenha" value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="#{msgs.senhaUsuarioRequired}" />
+
+            <h:outputLabel for="senhaConfirmacao" value="#{msgs.usuarioSenhaConfirmacao}" />
+            <h:inputSecret id="senhaConfirmacao" value="#{usuarioBean.senhaConfirmacao}" required="true" requiredMessage="#{msgs.senhaConfirmacaoUsuarioRequired}" />
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+            <h:commandButton action="#{usuarioBean.atualizarUsuarioFim()}" value="#{msgs.atualizar}" />
+            <h:commandButton action="#{usuarioBean.listarUsuarios()}" value="#{msgs.cancelar}" immediate="true" />
+        </h:panelGrid>
+        <br/>
+    </h:form>
+</h:body>
+</html>

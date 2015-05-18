@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+        <h:messages/>
+
+        <h3>${msgs.incluirTipoDocumentoHeader}</h3>
+        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+            <h:outputLabel for="nomeTipoDocumento" value="#{msgs.tipoDocumentoNome}" />
+            <h:inputText id="nomeTipoDocumento" value="#{tipoDocumentoBean.tipoDocumento.nomeTipo}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+ 
+            <h:outputLabel for="descricaoTipoDocumento" value="#{msgs.tipoDocumentoDescricao}" />
+            <h:inputText id="descricaoTipoDocumento" value="#{tipoDocumentoBean.tipoDocumento.descricao}" required="true" requiredMessage="#{msgs.descricaoTipoDocumentoRequired}" />
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+            <h:commandButton action="#{tipoDocumentoBean.incluirTipoDocumentoFim()}" value="#{msgs.incluir}" />
+            <h:commandButton action="#{tipoDocumentoBean.listarTiposDocumentos()}" value="#{msgs.cancelar}" immediate="true" />
+        </h:panelGrid>
+        <br/>
+    </h:form>
+</h:body>
+</html>
