@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,7 +23,6 @@ public class ArquivoAnexo implements Serializable{
 	@SequenceGenerator(name = "gen_andocumento", sequenceName = "seq_gen_sequence", allocationSize = 1)
 	private long id;
 	private String nome;
-	private String caminho;
 	
 	@ManyToOne
 	private Documento documento;
@@ -31,11 +31,11 @@ public class ArquivoAnexo implements Serializable{
 	private Calendar dataInclusao;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dataAlteracao;
-	
-	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataExclusao;
 
+	@OneToOne
+	private Usuario usuarioCriacao;
+	
 	public long getId() {
 		return id;
 	}
@@ -48,23 +48,11 @@ public class ArquivoAnexo implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getCaminho() {
-		return caminho;
-	}
-	public void setCaminho(String caminho) {
-		this.caminho = caminho;
-	}
 	public Calendar getDataInclusao() {
 		return dataInclusao;
 	}
 	public void setDataInclusao(Calendar dataInclusao) {
 		this.dataInclusao = dataInclusao;
-	}
-	public Calendar getDataAlteracao() {
-		return dataAlteracao;
-	}
-	public void setDataAlteracao(Calendar dataAlteracao) {
-		this.dataAlteracao = dataAlteracao;
 	}
 	public Calendar getDataExclusao() {
 		return dataExclusao;
@@ -78,5 +66,10 @@ public class ArquivoAnexo implements Serializable{
 	public void setDocumento(Documento documento) {
 		this.documento = documento;
 	}
-	 
+	public Usuario getUsuarioCriacao() {
+		return usuarioCriacao;
+	}
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		this.usuarioCriacao = usuarioCriacao;
+	}	 
 }

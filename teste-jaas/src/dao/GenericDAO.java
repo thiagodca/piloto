@@ -106,4 +106,26 @@ public abstract class GenericDAO<T> {
             query.setParameter(entry.getKey(), entry.getValue());
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<T> executeQuery(String query, Map<String, Object> parameters) {
+        List<T> result = null;
+ 
+        try {
+            Query objQuery = em.createQuery(query);
+ 
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(objQuery, parameters);
+            }
+ 
+            result = objQuery.getResultList();
+ 
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+            e.printStackTrace();
+        }
+ 
+        return result;
+    }
+
 }

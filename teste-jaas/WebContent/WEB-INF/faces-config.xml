@@ -121,6 +121,19 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>listarParametros</from-outcome>
+            <to-view-id>/pages/protected/admin/listarParametros.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>atualizarParametro</from-outcome>
+            <to-view-id>/pages/protected/admin/atualizarParametro.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
     <application>
         <resource-bundle>
             <base-name>messages</base-name>

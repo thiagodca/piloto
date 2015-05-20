@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+        <h:messages/>
+ 
+        <h3>#{msgs.atualizarParametroHeader}: #{parametroBean.parametro.nome}</h3>
+        <h:inputHidden value="#{parametroBean.parametro.id}" />
+        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+            <h:outputLabel for="parametroNome" value="#{msgs.parametroNome}" />
+            <h:inputText disabled="true" id="parametroTitulo" value="#{parametroBean.parametro.nome}" />
+ 
+            <h:outputLabel for="parametroValor" value="#{msgs.parametroValor}" />
+            <h:inputText id="parametroValor" value="#{parametroBean.parametro.valor}" required="true" requiredMessage="#{msgs.valorParametroRequired}" />
+
+            <h:outputLabel for="parametroDescricao" value="#{msgs.parametroDescricao}" />
+            <h:inputText disabled="true" id="parametroDescricao" value="#{parametroBean.parametro.descricao}" />
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+            <h:commandButton action="#{parametroBean.atualizarParametroFim()}" value="#{msgs.atualizar}" />
+            <h:commandButton action="#{parametroBean.listarParametros()}" value="#{msgs.cancelar}" immediate="true" />
+        </h:panelGrid>
+        <br/>
+    </h:form>
+</h:body>
+</html>

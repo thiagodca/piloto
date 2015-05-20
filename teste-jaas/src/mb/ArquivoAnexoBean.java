@@ -1,4 +1,5 @@
 package mb;
+import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -7,12 +8,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 
-import util.UtilData;
 import model.ArquivoAnexo;
 import model.Documento;
+import model.Usuario;
+import util.UtilData;
 import facade.ArquivoAnexoFacade;
 import facade.DocumentoFacade;
+import facade.UsuarioFacade;
 
 @ManagedBean(name="arquivoAnexoBean")
 @RequestScoped
@@ -28,10 +32,15 @@ public class ArquivoAnexoBean {
 	@EJB
 	private DocumentoFacade documentoFacade;
 	
-	private ArquivoAnexo arquivoAnexo;
+    @EJB
+    private UsuarioFacade usuarioFacade;
+
+    private ArquivoAnexo arquivoAnexo;
     
     private Documento documento;
     
+    private Part file;
+
 	public ArquivoAnexo getArquivoAnexo(){
 		if(arquivoAnexo == null){
 			arquivoAnexo = new ArquivoAnexo();
@@ -42,17 +51,25 @@ public class ArquivoAnexoBean {
     public String incluirArquivoAnexoInicio(){
         return INCLUIR_ARQUIVOANEXO;
     }
-        
+    
     public String incluirArquivoAnexoFim(){
         try {
+        	UtilArquivo ua = new UtilArquivo();
+        	String nomeArquivo = ua.upload(file);
         	
             Documento umDocumento = documentoFacade.buscar(documento.getId());
             arquivoAnexo.setDocumento(umDocumento);
+            arquivoAnexo.setNome(nomeArquivo);
             arquivoAnexo.setDataInclusao(UtilData.getDataAtual());
+            arquivoAnexo.setUsuarioCriacao(getUsuarioLogado());
             arquivoAnexoFacade.salvar(arquivoAnexo);
             
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
+ 
+            return CONTINUAR_NA_PAGINA;
+        } catch (IOException e) {
+            sendErrorMessageToUser("Erro ao carregar arquivo para o servidor. " +e.getMessage());
  
             return CONTINUAR_NA_PAGINA;
         }       
@@ -103,6 +120,20 @@ public class ArquivoAnexoBean {
 	public void setDocumento(Documento documento) {
 		this.documento = documento;
 	}
+
+	public Part getFile() {
+		return file;
+	}
+
+	public void setFile(Part file) {
+		this.file = file;
+	}
+
+    private Usuario getUsuarioLogado(){
+    	String login = getContext().getExternalContext().getUserPrincipal().getName();
+    	Usuario usuario = usuarioFacade.buscar(login);
+    	return usuario;
+    }
 }
 
 
