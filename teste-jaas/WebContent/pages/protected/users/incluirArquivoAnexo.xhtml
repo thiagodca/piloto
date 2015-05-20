@@ -12,7 +12,7 @@
     <h:form>
         <h:messages/>
 
-        <h3>Incluindo anexo para documento #{documentoBean.documento.titulo}</h3>
+        <h3>Incluindo anexo para documento #{arquivoAnexoBean.documento.titulo}, #{arquivoAnexoBean.documento.id}</h3>
         <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
         	<h:inputHidden value="#{arquivoAnexoBean.documento.id}" />
             <h:outputLabel for="nomeArquivoAnexo" value="#{msgs.arquivoAnexoNome}" />
@@ -39,7 +39,7 @@
                     #{msgs.arquivoAnexoCaminho}
                 </f:facet>
  
-                #{documento.caminho}
+                #{arquivoAnexo.caminho}
             </h:column>
             <h:column>
                 <f:facet name="header">

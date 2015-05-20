@@ -1,6 +1,7 @@
 package model;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,6 +43,10 @@ public class Usuario implements Serializable{
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataExclusao;
+
+	@ManyToMany
+	@JoinTable(name = "usuario_cliente", joinColumns = { @JoinColumn(name = "login") }, inverseJoinColumns = { @JoinColumn(name = "id") })
+	private Set<Cliente> cliente;
 
 	public String getLogin() {
 		return login;
@@ -83,6 +89,12 @@ public class Usuario implements Serializable{
 	}
 	public void setDataExclusao(Calendar dataExclusao) {
 		this.dataExclusao = dataExclusao;
+	}
+	public Set<Cliente> getCliente() {
+		return cliente;
+	}
+	public void setCliente(Set<Cliente> cliente) {
+		this.cliente = cliente;
 	}
 	 
 }

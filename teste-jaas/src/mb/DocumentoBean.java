@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import model.ArquivoAnexo;
 import model.Documento;
 import model.TipoDocumento;
 import model.Usuario;

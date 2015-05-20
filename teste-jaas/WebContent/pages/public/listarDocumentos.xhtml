@@ -67,19 +67,19 @@
       			</h:outputLabel>
             </h:column>
             <h:column>
-                <h:panelGrid columns="2">
-                    <!-- Always save the id as hidden when you use a request scope MB -->
-                    <h:inputHidden value="#{documento.id}" />
- 
+                <h:panelGrid columns="3"> 
                     <h:commandButton action="#{documentoBean.atualizarDocumentoInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
                     </h:commandButton>
                     <h:commandButton action="#{documentoBean.deletarDocumentoInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
                     </h:commandButton>
-					<h:commandButton action="#{documentoBean.incluirArquivoAnexoInicio()}" value="#{msgs.incluirArquivoAnexo}" rendered="#{loginBean.usuarioDigitador}" >
+					<h:commandButton action="#{arquivoAnexoBean.incluirArquivoAnexoInicio()}" value="#{msgs.incluirArquivoAnexo}" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{arquivoAnexoBean.documento}" value="#{documento}" />
-                    </h:commandButton>                    
+                    </h:commandButton>   
+
+                    <!-- Always save the id as hidden when you use a request scope MB -->
+                    <h:inputHidden value="#{documento.id}" />
                 </h:panelGrid>
             </h:column>
         </h:dataTable>

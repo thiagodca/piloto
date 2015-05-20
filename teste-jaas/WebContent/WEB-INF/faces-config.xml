@@ -40,7 +40,6 @@
         <navigation-case>
             <from-outcome>incluirArquivoAnexo</from-outcome>
             <to-view-id>/pages/protected/users/incluirArquivoAnexo.xhtml</to-view-id>
-            <redirect/>
         </navigation-case>
     </navigation-rule>
     
@@ -93,6 +92,32 @@
         <navigation-case>
             <from-outcome>deletarUsuario</from-outcome>
             <to-view-id>/pages/protected/admin/deletarUsuario.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>listarClientes</from-outcome>
+            <to-view-id>/pages/protected/admin/listarClientes.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>incluirCliente</from-outcome>
+            <to-view-id>/pages/protected/admin/incluirCliente.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>atualizarCliente</from-outcome>
+            <to-view-id>/pages/protected/admin/atualizarCliente.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>deletarCliente</from-outcome>
+            <to-view-id>/pages/protected/admin/deletarCliente.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

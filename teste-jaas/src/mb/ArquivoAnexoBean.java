@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import util.UtilData;
 import model.ArquivoAnexo;
 import model.Documento;
 import facade.ArquivoAnexoFacade;
@@ -38,12 +39,17 @@ public class ArquivoAnexoBean {
 		return arquivoAnexo;
 	}
 	
+    public String incluirArquivoAnexoInicio(){
+        return INCLUIR_ARQUIVOANEXO;
+    }
+        
     public String incluirArquivoAnexoFim(){
         try {
         	
             Documento umDocumento = documentoFacade.buscar(documento.getId());
-            
-            
+            arquivoAnexo.setDocumento(umDocumento);
+            arquivoAnexo.setDataInclusao(UtilData.getDataAtual());
+            arquivoAnexoFacade.salvar(arquivoAnexo);
             
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
@@ -61,7 +67,10 @@ public class ArquivoAnexoBean {
     }
     
     public List<ArquivoAnexo> getListaArquivosAnexos(){
-		return arquivoAnexoFacade.listarTodos();
+    	if(documento != null){
+    		return arquivoAnexoFacade.listarTodos(documento.getId());	
+    	}
+		return null;
 	}
     
 	public void setArquivoAnexo(ArquivoAnexo arquivoAnexo){
@@ -85,6 +94,9 @@ public class ArquivoAnexoBean {
     }
 
 	public Documento getDocumento() {
+		if(documento == null){
+			documento = new Documento();
+		}
 		return documento;
 	}
 

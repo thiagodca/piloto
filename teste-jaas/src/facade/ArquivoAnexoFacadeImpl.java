@@ -1,4 +1,5 @@
 package facade;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,8 +15,10 @@ public class ArquivoAnexoFacadeImpl implements ArquivoAnexoFacade{
 	private ArquivoAnexoDAO arquivoAnexoDAO;
 
 	@Override
-	public List<ArquivoAnexo> listarTodos() {
-		List<ArquivoAnexo> result = arquivoAnexoDAO.findAll();
+	public List<ArquivoAnexo> listarTodos(long idDocumento) {
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("id", idDocumento);
+		List<ArquivoAnexo> result = arquivoAnexoDAO.find("ArquivoAnexo.listarPorDocumento", parametros);
 		return result;
 	}
 	

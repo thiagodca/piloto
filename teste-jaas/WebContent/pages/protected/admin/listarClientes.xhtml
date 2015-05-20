@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+ 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+ 
+        <h:messages />
+        <h:dataTable value="#{clienteBean.listaClientes}" var="cliente" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.clienteCodigo}
+                </f:facet>
+ 
+                #{cliente.codigo}
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.clienteRazaoSocial}
+                </f:facet>
+ 
+                #{cliente.razaoSocial}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.clienteCpfCnpj}
+                </f:facet>
+ 
+                #{cliente.cpfCnpj}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.clienteUsuarioCriacao}
+                </f:facet>
+ 
+                #{cliente.usuarioCriacao.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.clienteDataCriacao}
+                </f:facet>
+ 
+ 				<h:outputLabel value="#{cliente.dataInclusao.time}">
+         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+      			</h:outputLabel>
+            </h:column>
+			<h:column>
+                <f:facet name="header">
+                    #{msgs.clienteUsuarioAlteracao}
+                </f:facet>
+ 
+                #{cliente.usuarioAlteracao.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    #{msgs.clienteDataAlteracao}
+                </f:facet>
+ 
+ 				<h:outputLabel value="#{cliente.dataAlteracao.time}">
+         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+      			</h:outputLabel>
+            </h:column>            
+            <h:column>
+                <h:panelGrid columns="2">
+                    <!-- Always save the id as hidden when you use a request scope MB -->
+                    <h:inputHidden value="#{cliente.id}" />
+ 
+                    <h:commandButton action="#{clienteBean.atualizarClienteInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
+                    </h:commandButton>
+                    <h:commandButton action="#{clienteBean.deletarClienteInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:column>
+        </h:dataTable>
+        <!-- This button is displayed to the user, just to you see the error msg  -->
+        <h:commandButton action="incluirCliente" value="#{msgs.incluir} #{msgs.cliente}" />
+    </h:form>
+</h:body>
+</html>

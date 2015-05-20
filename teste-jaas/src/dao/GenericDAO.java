@@ -78,6 +78,28 @@ public abstract class GenericDAO<T> {
         return result;
     }
  
+    @SuppressWarnings("unchecked")
+    public List<T> find(String namedQuery, Map<String, Object> parameters) {
+        List<T> result = null;
+ 
+        try {
+            Query query = em.createNamedQuery(namedQuery);
+ 
+            // Method that will populate parameters if they are passed not null and empty
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(query, parameters);
+            }
+ 
+            result = query.getResultList();
+ 
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+            e.printStackTrace();
+        }
+ 
+        return result;
+    }
+    
     private void populateQueryParameters(Query query, Map<String, Object> parameters) {
  
         for (Entry<String, Object> entry : parameters.entrySet()) {
