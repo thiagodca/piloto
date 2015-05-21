@@ -48,7 +48,21 @@ public class ParametroFacadeImpl implements ParametroFacade{
 		
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("tipoParametro", idTipo);
-		List<Parametro> result = parametroDAO.executeQuery(query, parametros);
+		List<Parametro> result = parametroDAO.find(query, parametros);
+		return result;
+	}
+
+	@Override
+	public Parametro buscarPorTipoENome(long idTipo, String nome) {
+		
+		String query = "SELECT p FROM " + Parametro.class.getName() + " p " +
+					   " WHERE p.tipoParametro.id = :tipoParametro" +
+					   "   AND p.nome             = :nome";
+	
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("tipoParametro", idTipo);
+		parametros.put("tipoParametro", nome);
+		Parametro result = parametroDAO.findOneResult(query, parametros);
 		return result;
 	}
 }

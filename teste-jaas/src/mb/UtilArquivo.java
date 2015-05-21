@@ -4,15 +4,62 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.ejb.EJB;
 import javax.servlet.http.Part;
+
+import model.ArquivoUpload;
+import model.Cliente;
+import model.Parametro;
+import model.TipoParametro;
+import facade.ClienteFacade;
+import facade.ParametroFacade;
 
 public class UtilArquivo {
 
+	@EJB
+	private ParametroFacade parametroFacade;
+	
+	@EJB
+	private ClienteFacade clienteFacade;
+	
 	public UtilArquivo() {
 	}
 	
-    public String upload(Part file) throws IOException {
+	private String buscaDiretorio(){
+		
+		Parametro parametro = parametroFacade.buscarPorTipoENome(TipoParametro.ARQUIVO, "PATH");
+		if(parametro != null){
+			String diretorio = parametro.getValor();
+			if(!diretorio.endsWith("/")){
+				diretorio.concat("/");
+			}
+			return diretorio;
+		}
+		return null;
+	}
+	
+	private String buscaCodigoCliente(){
+		
+		Cliente cliente = clienteFacade.buscar(1);
+		if(cliente != null){
+			String codigo = cliente.getCodigo();
+			if(!codigo.endsWith("/")){
+				codigo.concat("/");
+			}
+			return codigo;
+		}
+		return null;
+	}
+	
+    public String upload(ArquivoUpload arquivoUpload) throws IOException {
+    	
+    	Part file = arquivoUpload.getArquivo();
+    	String diretorio = arquivoUpload.getCaminho();
+    	String codigoCliente = arquivoUpload.getCodigoCliente();
     	String fileName = getFilename(file);
+    	
+    	String path = diretorio + codigoCliente + "/" + fileName;
+    	
     	InputStream inputStream = file.getInputStream();          
     	FileOutputStream outputStream = new FileOutputStream(fileName);
          

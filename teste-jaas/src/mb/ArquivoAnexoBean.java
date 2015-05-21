@@ -12,6 +12,8 @@ import javax.servlet.http.Part;
 
 import model.ArquivoAnexo;
 import model.Documento;
+import model.Parametro;
+import model.TipoParametro;
 import model.Usuario;
 import util.UtilData;
 import facade.ArquivoAnexoFacade;
@@ -55,6 +57,8 @@ public class ArquivoAnexoBean {
     public String incluirArquivoAnexoFim(){
         try {
         	UtilArquivo ua = new UtilArquivo();
+        	
+
         	String nomeArquivo = ua.upload(file);
         	
             Documento umDocumento = documentoFacade.buscar(documento.getId());

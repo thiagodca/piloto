@@ -57,7 +57,7 @@ public abstract class GenericDAO<T> {
     // Using the unchecked because JPA does not have a
     // ery.getSingleResult()<T> method
     @SuppressWarnings("unchecked")
-    protected T findOneResult(String namedQuery, Map<String, Object> parameters) {
+    protected T findOneResultNamedQuery(String namedQuery, Map<String, Object> parameters) {
         T result = null;
  
         try {
@@ -79,7 +79,7 @@ public abstract class GenericDAO<T> {
     }
  
     @SuppressWarnings("unchecked")
-    public List<T> find(String namedQuery, Map<String, Object> parameters) {
+    public List<T> findNamedQuery(String namedQuery, Map<String, Object> parameters) {
         List<T> result = null;
  
         try {
@@ -108,7 +108,7 @@ public abstract class GenericDAO<T> {
     }
     
     @SuppressWarnings("unchecked")
-    public List<T> executeQuery(String query, Map<String, Object> parameters) {
+    public List<T> find(String query, Map<String, Object> parameters) {
         List<T> result = null;
  
         try {
@@ -127,5 +127,28 @@ public abstract class GenericDAO<T> {
  
         return result;
     }
+    
+    @SuppressWarnings("unchecked")
+	public T findOneResult(String query, Map<String, Object> parameters) {
+        T result = null;
+ 
+        try {
+            Query objQuery = em.createQuery(query);
+ 
+            // Method that will populate parameters if they are passed not null and empty
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(objQuery, parameters);
+            }
+ 
+            result = (T) objQuery.getSingleResult();
+ 
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+            e.printStackTrace();
+        }
+ 
+        return result;
+    }
+    
 
 }
