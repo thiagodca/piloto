@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import model.Cliente;
 import model.Usuario;
 import util.UtilData;
@@ -18,12 +20,6 @@ import facade.UsuarioFacade;
 @RequestScoped
 public class ClienteBean {
 
-    private static final String INCLUIR_CLIENTE 	= "incluirCliente";
-    private static final String DELETAR_CLIENTE 	= "deletarCliente";
-    private static final String ATUALIZAR_CLIENTE 	= "atualizarCliente";
-    private static final String LISTAR_CLIENTES 	= "listarClientes";
-    private static final String CONTINUAR_NA_PAGINA = null;
-	
 	@EJB
 	private ClienteFacade clienteFacade;
 	
@@ -47,13 +43,9 @@ public class ClienteBean {
 		return clienteFacade.listarTodos();
 	}
 
-    public String atualizarClienteInicio(){
-        return ATUALIZAR_CLIENTE;
-    }
- 
-    public String atualizarClienteFim(){
+    public void atualizarClienteFim(){
         try {
-        	Cliente umCliente = clienteFacade.buscar(cliente.getId());
+        	Cliente umCliente = clienteFacade.buscarClientePorId(cliente.getId());
         	
         	umCliente.setCodigo(cliente.getCodigo());
         	umCliente.setRazaoSocial(cliente.getRazaoSocial());
@@ -65,40 +57,31 @@ public class ClienteBean {
             clienteFacade.atualizar(cliente);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
-            return CONTINUAR_NA_PAGINA;
-        }
+            }
  
         sendInfoMessageToUser("Operation Complete: Update");
-        return LISTAR_CLIENTES;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogAtualizarCliente').hide();");
     }
  
-    public String deletarClienteInicio(){
-        return DELETAR_CLIENTE;
-    }
- 
-    public String deletarClienteFim(){
+    public void deletarClienteFim(){
         try {
         	
-        	Cliente umCliente = clienteFacade.buscar(cliente.getId());
+        	Cliente umCliente = clienteFacade.buscarClientePorId(cliente.getId());
         	umCliente.setDataExclusao(UtilData.getDataAtual());
         	umCliente.setUsuarioAlteracao(getUsuarioLogado());
         	
             clienteFacade.atualizar(umCliente);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Call the ADM");
-            return CONTINUAR_NA_PAGINA;
         }           
  
         sendInfoMessageToUser("Operation Complete: Delete");
- 
-        return LISTAR_CLIENTES;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogDeletarCliente').hide();");
     }
  
-    public String incluirClienteInicio(){
-        return INCLUIR_CLIENTE;
-    }
-        
-    public String incluirClienteFim(){
+    public void incluirClienteFim(){
         try {
         	cliente.setUsuarioCriacao(getUsuarioLogado());
         	cliente.setDataInclusao(UtilData.getDataAtual());
@@ -106,17 +89,11 @@ public class ClienteBean {
             clienteFacade.salvar(cliente);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
- 
-            return CONTINUAR_NA_PAGINA;
         }       
  
         sendInfoMessageToUser("Operation Complete: Create");
- 
-        return LISTAR_CLIENTES;
-    }
- 
-    public String listarClientes(){
-        return LISTAR_CLIENTES;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogIncluirCliente').hide();");
     }
  
     private void sendInfoMessageToUser(String message){
@@ -140,5 +117,3 @@ public class ClienteBean {
     	return usuario;
     }
 }
-
-

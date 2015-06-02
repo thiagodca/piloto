@@ -8,18 +8,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import model.TipoDocumento;
 import facade.TipoDocumentoFacade;
 
 @ManagedBean(name="tipoDocumentoBean")
 @RequestScoped
 public class TipoDocumentoBean {
-
-    private static final String INCLUIR_TIPO_DOCUMENTO 		= "incluirTipoDocumento";
-    private static final String DELETAR_TIPO_DOCUMENTO 		= "deletarTipoDocumento";
-    private static final String ATUALIZAR_TIPO_DOCUMENTO 	= "atualizarTipoDocumento";
-    private static final String LISTAR_TIPOS_DOCUMENTOS 	= "listarTiposDocumentos";
-    private static final String CONTINUAR_NA_PAGINA 		= null;
 	
 	@EJB
 	private TipoDocumentoFacade tipoDocumentoFacade;
@@ -41,59 +37,40 @@ public class TipoDocumentoBean {
 		return tipoDocumentoFacade.listarTodos();
 	}
 	
-    public String atualizarTipoDocumentoInicio(){
-        return ATUALIZAR_TIPO_DOCUMENTO;
-    }
- 
-    public String atualizarTipoDocumentoFim(){
+    public void atualizarTipoDocumentoFim(){
         try {
             tipoDocumentoFacade.atualizar(tipoDocumento);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
-            return CONTINUAR_NA_PAGINA;
         }
  
         sendInfoMessageToUser("Operation Complete: Update");
-        return LISTAR_TIPOS_DOCUMENTOS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogAlterarTipoDocumento').hide();");
     }
  
-    public String deletarTipoDocumentoInicio(){
-        return DELETAR_TIPO_DOCUMENTO;
-    }
- 
-    public String deletarTipoDocumentoFim(){
+    public void deletarTipoDocumentoFim(){
         try {
             tipoDocumentoFacade.deletar(tipoDocumento);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Call the ADM");
-            return CONTINUAR_NA_PAGINA;
         }           
  
         sendInfoMessageToUser("Operation Complete: Delete");
- 
-        return LISTAR_TIPOS_DOCUMENTOS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogDeletarTipoDocumento').hide();");
     }
  
-    public String incluirTipoDocumentoInicio(){
-        return INCLUIR_TIPO_DOCUMENTO;
-    }
- 
-    public String incluirTipoDocumentoFim(){
+    public void incluirTipoDocumentoFim(){
         try {
             tipoDocumentoFacade.salvar(tipoDocumento);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
- 
-            return CONTINUAR_NA_PAGINA;
         }       
  
         sendInfoMessageToUser("Operation Complete: Create");
- 
-        return LISTAR_TIPOS_DOCUMENTOS;
-    }
- 
-    public String listarTiposDocumentos(){
-        return LISTAR_TIPOS_DOCUMENTOS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogIncluirTipoDocumento').hide();");
     }
  
     private void sendInfoMessageToUser(String message){

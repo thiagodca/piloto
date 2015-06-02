@@ -8,10 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import model.Parametro;
-import model.TipoParametro;
-import model.Usuario;
-import util.UtilData;
 import facade.ParametroFacade;
 import facade.UsuarioFacade;
 
@@ -19,10 +18,6 @@ import facade.UsuarioFacade;
 @RequestScoped
 public class ParametroBean {
 
-    private static final String ATUALIZAR_PARAMETRO = "atualizarParametro";
-    private static final String LISTAR_PARAMETROS 	= "listarParametros";
-    private static final String CONTINUAR_NA_PAGINA = null;
-	
 	@EJB
 	private ParametroFacade parametroFacade;
 	
@@ -46,11 +41,7 @@ public class ParametroBean {
 		return parametroFacade.listarTodos();
 	}
 
-    public String atualizarParametroInicio(){
-        return ATUALIZAR_PARAMETRO;
-    }
- 
-    public String atualizarParametroFim(){
+    public void atualizarParametroFim(){
         try {
         	Parametro umParametro = parametroFacade.buscar(parametro.getId());
         	
@@ -59,15 +50,11 @@ public class ParametroBean {
             parametroFacade.atualizar(parametro);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
-            return CONTINUAR_NA_PAGINA;
         }
  
         sendInfoMessageToUser("Operation Complete: Update");
-        return LISTAR_PARAMETROS;
-    }
- 
-    public String listarParametros(){
-        return LISTAR_PARAMETROS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogAtualizarParametro').hide();");
     }
  
     private void sendInfoMessageToUser(String message){

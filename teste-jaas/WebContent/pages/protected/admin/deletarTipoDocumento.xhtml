@@ -1,24 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
-<h:body>
-    <h:form>
-        <h:messages/>
- 
-        <h3>#{msgs.deletarTipoDocumentoHeader}: #{tipoDocumentoBean.tipoDocumento.nomeTipo}?</h3>
-        <h:inputHidden value="#{tipoDocumentoBean.tipoDocumento.id}" />
-        <h:panelGrid columns="2">
-            <h:commandButton action="#{tipoDocumentoBean.deletarTipoDocumentoFim()}" value="#{msgs.deletar}" />
-            <h:commandButton action="#{tipoDocumentoBean.listarTiposDocumentos()}" value="#{msgs.cancelar}" immediate="true" />
-        </h:panelGrid>
-        <br/>
-    </h:form>
-</h:body>
-</html>
+	<h:messages/>
+
+    <h3>#{msgs.deletarTipoDocumentoHeader}: #{tipoDocumentoBean.tipoDocumento.nomeTipo}?</h3>
+    <h:inputHidden value="#{tipoDocumentoBean.tipoDocumento.id}" />
+    <h:panelGrid columns="2">
+        <p:commandButton update=":#{p:component('formTiposDocumentos')}" actionListener="#{tipoDocumentoBean.deletarTipoDocumentoFim}" value="#{msgs.deletar}" />
+    </h:panelGrid>
+    <br/>
+</ui:composition>

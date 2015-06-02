@@ -1,56 +1,59 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/templates/template.xhtml">
+	
+<ui:define name="content">
+
 <h:body>
-    <h:form>
- 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+
+	<h:form id="formParametros">
  
-        <h:messages />
-        <h:dataTable value="#{parametroBean.listaParametros}" var="parametro" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
-            <h:column>
+	    <p:messages />
+        <p:dataTable value="#{parametroBean.listaParametros}" var="parametro">
+            <p:column>
                 <f:facet name="header">
                     #{msgs.parametroTipoParametro}
                 </f:facet>
  
                 #{parametro.tipoParametro.nome}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.parametroNome}
                 </f:facet>
  
                 #{parametro.nome}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.parametroValor}
                 </f:facet>
  
                 #{parametro.valor}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.parametroDescricao}
                 </f:facet>
  
                 #{parametro.descricao}
-            </h:column>
-            <h:column>
-                <h:panelGrid columns="3"> 
-                    <h:commandButton action="#{parametroBean.atualizarParametroInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioAdmin}" >
+            </p:column>
+            <p:column>
+                <h:panelGrid columns="2"> 
+                    <p:commandButton update=":#{p:component('formAlterarParametro')}" oncomplete="PF('dialogAlterarParametro').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
                         <f:setPropertyActionListener target="#{parametroBean.parametro}" value="#{parametro}" />
-                    </h:commandButton>
-                    <!-- Always save the id as hidden when you use a request scope MB -->
+                    </p:commandButton>
                     <h:inputHidden value="#{parametro.id}" />
                 </h:panelGrid>
-            </h:column>
-        </h:dataTable>
+            </p:column>
+        </p:dataTable>
     </h:form>
 </h:body>
-</html>
+
+</ui:define>
+
+</ui:composition>

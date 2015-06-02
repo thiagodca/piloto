@@ -1,47 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/templates/template.xhtml">
+	
+<ui:define name="content">
+
 <h:body>
-    <h:form>
- 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+
+	<h:form id="formPrincipal">
  
-        <h:messages />
-        <h:dataTable value="#{documentoBean.listaDocumentos}" var="documento" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
-            <h:column>
+        <p:messages />
+        
+        <p:outputLabel for="codigoCliente" value="#{msgs.documentoCodigoCliente}" />
+        <p:inputText id="codigoCliente" value="#{documentoBean.codigoCliente}" />
+
+		<p:commandButton value="Listar" update="tabelaDocumentos" actionListener="#{documentoBean.obterListaDeDocumentos}" />
+		
+        <p:dataTable id="tabelaDocumentos" value="#{documentoBean.listaDeDocumentos}" var="documento">
+            <p:column>
                 <f:facet name="header">
                     #{msgs.documentoTipoDocumento}
                 </f:facet>
  
                 #{documento.tipoDocumento.nomeTipo}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.documentoTitulo}
                 </f:facet>
  
                 #{documento.titulo}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.documentoDescricao}
                 </f:facet>
  
                 #{documento.descricao}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.documentoUsuarioCriacao}
                 </f:facet>
  
                 #{documento.usuarioCriacao.login}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.documentoDataCriacao}
                 </f:facet>
@@ -49,15 +56,15 @@
  				<h:outputLabel value="#{documento.dataInclusao.time}">
          			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
       			</h:outputLabel>
-            </h:column>
-			<h:column>
+            </p:column>
+			<p:column>
                 <f:facet name="header">
                     #{msgs.documentoUsuarioAlteracao}
                 </f:facet>
  
                 #{documento.usuarioAlteracao.login}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.documentoDataAlteracao}
                 </f:facet>
@@ -65,26 +72,29 @@
  				<h:outputLabel value="#{documento.dataAlteracao.time}">
          			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
       			</h:outputLabel>
-            </h:column>
-            <h:column>
-                <h:panelGrid columns="3"> 
-                    <h:commandButton action="#{documentoBean.atualizarDocumentoInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioDigitador}" >
+            </p:column>
+            <p:column>
+                <p:panel columns="3">
+                    <p:commandButton update=":#{p:component('formAlterar')}" oncomplete="PF('dialogAlterar').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
-                    </h:commandButton>
-                    <h:commandButton action="#{documentoBean.deletarDocumentoInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioDigitador}" >
+                    </p:commandButton>
+                    <p:commandButton update=":#{p:component('formDeletar')}" oncomplete="PF('dialogDeletar').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
-                    </h:commandButton>
-					<h:commandButton action="#{arquivoAnexoBean.incluirArquivoAnexoInicio()}" value="#{msgs.incluirArquivoAnexo}" rendered="#{loginBean.usuarioDigitador}" >
-                        <f:setPropertyActionListener target="#{arquivoAnexoBean.documento}" value="#{documento}" />
-                    </h:commandButton>   
-
-                    <!-- Always save the id as hidden when you use a request scope MB -->
-                    <h:inputHidden value="#{documento.id}" />
-                </h:panelGrid>
-            </h:column>
-        </h:dataTable>
-        <!-- This button is displayed to the user, just to you see the error msg  -->
-        <h:commandButton action="incluirDocumento" value="#{msgs.incluir} #{msgs.documento}" />
+                    </p:commandButton>
+					<p:commandButton update=":#{p:component('formAnexar')}" oncomplete="PF('dialogAnexar').show()" immediate="true" title="#{msgs.incluirArquivoAnexo}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
+                        <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
+                    </p:commandButton>
+                	<h:inputHidden value="#{documento.id}" />
+                </p:panel>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton actionListener="#{documentoBean.incluirDocumentoInicio}" oncomplete="PF('dialogIncluir').show()" immediate="true" value="#{msgs.incluir}" icon="ui-icon-star" rendered="#{loginBean.usuarioDigitador}" >
+            <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
+        </p:commandButton> 
     </h:form>
+    	
 </h:body>
-</html>
+
+</ui:define>
+
+</ui:composition>

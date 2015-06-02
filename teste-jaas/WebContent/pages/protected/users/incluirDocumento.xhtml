@@ -1,36 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
-<h:body>
-    <h:form>
-        <h:messages/>
+	<p:panel id="panel" header="${msgs.incluirDocumentoHeader}">
+       
+		<p:messages/>
 
-        <h3>${msgs.incluirDocumentoHeader}</h3>
-        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-            <h:outputLabel value="#{msgs.documentoTipoDocumento}" />
-			<h:selectOneMenu value="#{documentoBean.documento.tipoDocumento}">
-				<f:selectItem itemLabel="SELECIONE" itemValue="" />
-				<f:selectItems value="#{documentoBean.listaTiposDocumentos}" var="tipo" itemLabel="#{tipo.nomeTipo}" itemValue="#{tipo.id}"/>
-			</h:selectOneMenu>
-
-            <h:outputLabel for="tituloDocumento" value="#{msgs.documentoTitulo}" />
-            <h:inputText id="tituloDocumento" value="#{documentoBean.documento.titulo}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+		<h:panelGrid columns="3" cellpadding="5">
+			            
+            <p:outputLabel for="codigoClienteDocumento" value="#{msgs.documentoCodigoCliente}" />
+            <p:inputText id="codigoClienteDocumento" value="#{documentoBean.codigoCliente}" disabled="true"/>
+			<p:outputLabel value=""/>
+			
+            <p:outputLabel value="#{msgs.documentoTipoDocumento}" />
+			<p:selectOneMenu converter="#{objectConverter}" id="selectTipo" value="#{documentoBean.documento.tipoDocumento}" required="true" >
+				<f:selectItems value="#{documentoBean.listaTiposDocumentos}" var="_tipo" itemLabel="#{_tipo.nomeTipo}" itemValue="#{_tipo}" />
+			</p:selectOneMenu>				
+			<p:outputLabel value=""/>
+			
+            <p:outputLabel for="tituloDocumento" value="#{msgs.documentoTitulo}" />
+            <p:inputText id="tituloDocumento" value="#{documentoBean.documento.titulo}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+            <p:message for="tituloDocumento" display="icon" />
  
-            <h:outputLabel for="descricaoDocumento" value="#{msgs.documentoDescricao}" />
-            <h:inputText id="descricaoDocumento" value="#{documentoBean.documento.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+            <p:outputLabel for="descricaoDocumento" value="#{msgs.documentoDescricao}" />
+            <p:inputText id="descricaoDocumento" value="#{documentoBean.documento.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+            <p:message for="descricaoDocumento" display="icon" />
+            
         </h:panelGrid>
-        <h:panelGrid columns="2">
-            <h:commandButton action="#{documentoBean.incluirDocumentoFim()}" value="#{msgs.incluir}" />
-            <h:commandButton action="#{documentoBean.listarDocumentos()}" value="#{msgs.cancelar}" immediate="true" />
+        <h:panelGrid columns="1">
+            <p:commandButton update=":#{p:component('formPrincipal')}" actionListener="#{documentoBean.incluirDocumentoFim}" value="#{msgs.incluir}" />
         </h:panelGrid>
-        <br/>
-    </h:form>
-</h:body>
-</html>
+	</p:panel>
+    <br/>
+       
+</ui:composition>

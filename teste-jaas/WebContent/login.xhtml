@@ -1,33 +1,130 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-	
-	
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
 <h:head>
-    <h:outputStylesheet library="css" name="main.css" />
+	<style>
+		.ui-panelgrid .ui-widget {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+		}
+		
+		body {
+			margin:50px 0px; 
+			padding:0px;
+			text-align:center;
+		}
+				
+		.login {
+			text-align: center;
+			width: 350px;
+			font-size: small !important;
+			border: hidden !important;
+		}
+		
+		.login td {
+			height: 50px;
+			border: hidden !important;
+		}
+		
+		.top {
+			width: 50%;
+			color: #106FBE;
+			font-size: medium !important;
+			font-weight: bold !important;
+		}
+		
+		td.usuario {
+			padding: 30px 0px 5px !important;
+		}
+		
+		td.senha {
+			padding: 5px 0px 5px !important;
+		}
+		
+		td.esqueci {
+			padding: 5px 35px 5px !important;
+			text-align: left;
+		}
+		
+		td.conectar {
+			padding: 5px 0px 30px !important;
+		}
+		
+		input {
+			width: 80%;
+		}
+
+		.form-control {
+			height: 46px;
+			padding: 8px 18px;
+			font-size: 16px;
+			line-height: 28px;
+			color: #777777 !important;
+			background-color: #ffffff !important;
+			background-image: none !important;
+			border: 1px solid #dddddd !important;
+			border-radius: 3px !important;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+			-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+		}
+		
+		button {
+			width: 80%;
+			height: 40px;
+			font-size: small !important;
+		}
+		
+		.btn-info {
+			color: #ffffff !important;
+			border: 0 !important;
+			background: #106FBE !important;
+			text-shadow: none !important;
+			-webkit-transition: background 0.2s ease-in !important;
+			transition: background 0.2s ease-in !important;
+			-webkit-box-shadow: none !important;
+			box-shadow: none !important;
+			filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
+		}
+		
+	
+	</style>
 </h:head>
 <h:body>
-    <p>Login:</p>
-
-    <form method="post" action="j_security_check">
-        <h:messages layout="table" errorStyle="background: #AFEEEE;"
-            infoStyle="background: #AFEEEE;" globalOnly="true" />
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Username: " />
-            <input type="text" id="j_username" name="j_username" />
-            <h:outputLabel value="Password: " />
-            <input type="password" id="j_password" name="j_password" />
-            <h:outputText value="" />
-            <h:panelGrid columns="1">
-                <input type="submit" name="submit" value="Login" />
-            </h:panelGrid>
-        </h:panelGrid>
-        <br />
-    </form>
+    <h:form class="loginPanelStyle" id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false">
+    	<div align="center">
+    		<p:growl id="msgs" showDetail="true" sticky="false" /> 
+            <p:panelGrid styleClass="login">
+            	<p:row>
+            		<p:column styleClass="top">
+            			<p:outputLabel value="Autenticacao" />
+            		</p:column>
+            	</p:row>
+				<p:row>
+					<p:column styleClass="usuario">
+		                <p:inputText styleClass="form-control" id="j_username" name="j_username" required="true" requiredMessage="Informe o nome do usuario" message="fc" title="Usuario" placeholder="Usuario"></p:inputText>
+		            </p:column>
+		        </p:row>
+				<p:row>
+				    <p:column styleClass="senha">
+		                <p:password styleClass="form-control" id="j_password" name="j_password" required="true" requiredMessage="Informe a senha" title="Senha" placeholder="Senha"></p:password>
+            		</p:column>
+            	</p:row>            	
+				<p:row>
+				    <p:column styleClass="esqueci">
+		                <p:commandLink value="Esqueceu sua senha?"></p:commandLink>
+            		</p:column>
+            	</p:row>            	
+				<p:row>
+					<p:column styleClass="conectar">
+						<p:commandButton styleClass="btn-info" value="Entrar" update="msgs" type="submit" name="submit" ajax="false"></p:commandButton>
+					</p:column>
+				</p:row>
+            </p:panelGrid>
+		</div>
+   	</h:form>
 </h:body>
 </html>
-
-

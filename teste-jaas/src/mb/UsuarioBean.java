@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import model.Usuario;
 import util.CriptografiaUtil;
 import util.UtilData;
@@ -17,12 +19,6 @@ import facade.UsuarioFacade;
 @RequestScoped
 public class UsuarioBean {
 
-    private static final String INCLUIR_DOCUMENTO 	= "incluirUsuario";
-    private static final String DELETAR_DOCUMENTO 	= "deletarUsuario";
-    private static final String ATUALIZAR_DOCUMENTO = "atualizarUsuario";
-    private static final String LISTAR_USUARIOS 	= "listarUsuarios";
-    private static final String CONTINUAR_NA_PAGINA = null;
-	
 	@EJB
 	private UsuarioFacade usuarioFacade;
 	
@@ -45,17 +41,12 @@ public class UsuarioBean {
 		return usuarioFacade.listarTodos();
 	}
 
-    public String atualizarUsuarioInicio(){
-        return ATUALIZAR_DOCUMENTO;
-    }
- 
-    public String atualizarUsuarioFim(){
+    public void atualizarUsuarioFim(){
         try {
 
         	if(!validaSenha()){
                 sendErrorMessageToUser("A senha e diferente da confirmacao.");
-                return CONTINUAR_NA_PAGINA;
-        	}
+            }
 
         	String senhaCriptografada = CriptografiaUtil.gerarSenhaSHA256(usuario.getSenha());
         	
@@ -69,18 +60,14 @@ public class UsuarioBean {
         	
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
-            return CONTINUAR_NA_PAGINA;
         }
  
         sendInfoMessageToUser("Operation Complete: Update");
-        return LISTAR_USUARIOS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogAtualizarUsuario').hide();");
     }
  
-    public String deletarUsuarioInicio(){
-        return DELETAR_DOCUMENTO;
-    }
- 
-    public String deletarUsuarioFim(){
+    public void deletarUsuarioFim(){
         try {
             Usuario umUsuario = usuarioFacade.buscar(usuario.getLogin());
             umUsuario.setDataExclusao(UtilData.getDataAtual());
@@ -88,24 +75,18 @@ public class UsuarioBean {
         	
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Call the ADM");
-            return CONTINUAR_NA_PAGINA;
         }           
  
         sendInfoMessageToUser("Operation Complete: Delete");
- 
-        return LISTAR_USUARIOS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogDeletarUsuario').hide();");
     }
  
-    public String incluirUsuarioInicio(){
-        return INCLUIR_DOCUMENTO;
-    }
- 
-    public String incluirUsuarioFim(){
+    public void incluirUsuarioFim(){
         try {
         	
         	if(!validaSenha()){
                 sendErrorMessageToUser("A senha e diferente da confirmacao.");
-                return CONTINUAR_NA_PAGINA;
         	}
 
         	String senhaCriptografada = CriptografiaUtil.gerarSenhaSHA256(usuario.getSenha());
@@ -116,17 +97,11 @@ public class UsuarioBean {
             usuarioFacade.salvar(usuario);
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
- 
-            return CONTINUAR_NA_PAGINA;
         }       
  
         sendInfoMessageToUser("Operation Complete: Create");
- 
-        return LISTAR_USUARIOS;
-    }
- 
-    public String listarUsuarios(){
-        return LISTAR_USUARIOS;
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogIncluirUsuario').hide();");
     }
  
     private void sendInfoMessageToUser(String message){

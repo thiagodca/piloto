@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>teste-jaas</display-name>
   <welcome-file-list>
-    <welcome-file>pages/public/main.xhtml</welcome-file>
+    <welcome-file>pages/public/index.xhtml</welcome-file>
   </welcome-file-list>
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
@@ -14,6 +14,20 @@
     <url-pattern>*.xhtml</url-pattern>
     <url-pattern>*.jsf</url-pattern>
   </servlet-mapping>
+  
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+ 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+ 		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+  
+  	<context-param>
+  		<param-name>primefaces.UPLOADER</param-name>
+  		<param-value>commons</param-value>
+	</context-param>
   
 	<login-config>
         <auth-method>FORM</auth-method>

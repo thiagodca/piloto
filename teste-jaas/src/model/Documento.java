@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -23,6 +24,9 @@ public class Documento implements Serializable{
 	private long id;
 	private String titulo;
 	private String descricao;
+	
+	@ManyToOne
+	private Cliente cliente;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataInclusao;
@@ -104,6 +108,12 @@ public class Documento implements Serializable{
 	}
 	public void setAnexos(List<ArquivoAnexo> anexos) {
 		this.anexos = anexos;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	 
 }

@@ -1,48 +1,48 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/templates/template.xhtml">
+
+<ui:define name="content">
+
 <h:body>
-    <h:form>
- 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+
+	<h:form id="formTiposDocumentos">
  
-        <h:messages />
-        <h:dataTable value="#{tipoDocumentoBean.listaTiposDocumentos}" var="tipoDocumento" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
-            <h:column>
+        <p:messages />
+        <p:dataTable id="tabelaTiposDocumentos" value="#{tipoDocumentoBean.listaTiposDocumentos}" var="tipoDocumento" >
+            <p:column>
                 <f:facet name="header">
                     #{msgs.tipoDocumentoNome}
                 </f:facet>
  
                 #{tipoDocumento.nomeTipo}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     #{msgs.tipoDocumentoDescricao}
                 </f:facet>
  
                 #{tipoDocumento.descricao}
-            </h:column>
-            <h:column>
-                <h:panelGrid columns="2">
-                    <!-- Always save the id as hidden when you use a request scope MB -->
+            </p:column>
+            <p:column>
+                <p:panelGrid columns="2">
+                    <p:commandButton update=":#{p:component('formAlterarTipoDocumento')}" oncomplete="PF('dialogAlterarTipoDocumento').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
+                    </p:commandButton>
+                    <p:commandButton update=":#{p:component('formDeletarTipoDocumento')}" oncomplete="PF('dialogDeletarTipoDocumento').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+                        <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
+                    </p:commandButton>
                     <h:inputHidden value="#{tipoDocumento.id}" />
- 
-                    <h:commandButton action="#{tipoDocumentoBean.atualizarTipoDocumentoInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioAdmin}" >
-                        <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
-                    </h:commandButton>
-                    <h:commandButton action="#{tipoDocumentoBean.deletarTipoDocumentoInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioAdmin}" >
-                        <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
-                    </h:commandButton>
-                </h:panelGrid>
-            </h:column>
-        </h:dataTable>
-        <!-- This button is displayed to the user, just to you see the error msg  -->
-        <h:commandButton action="incluirTipoDocumento" value="#{msgs.incluir} #{msgs.tipoDocumento}" />
+                 </p:panelGrid>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton update=":#{p:component('formIncluirTipoDocumento')}" oncomplete="PF('dialogIncluirTipoDocumento').show()" immediate="true" value="#{msgs.incluir}" icon="ui-icon-star"/>
     </h:form>
 </h:body>
-</html>
+
+</ui:define>
+</ui:composition>

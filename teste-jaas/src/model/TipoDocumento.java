@@ -40,5 +40,11 @@ public class TipoDocumento implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	public boolean equals(Object object) {
+        return (object instanceof TipoDocumento) && (id != 0) 
+             ? id == ((TipoDocumento) object).id 
+             : (object == this);
+    }
 	 
 }

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+		<ui:debug />
+		<f:metadata>
+			<ui:insert name="metadata" />
+		</f:metadata>
+		
+		<h:head>
+
+			<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+
+				<p:layoutUnit position="north" size="68" id="north" >
+					<ui:include src="header.xhtml" />
+				</p:layoutUnit>
+		
+				<p:layoutUnit position="west" id="west" resizable="false" header="#{msg['menu.title']}" style="height:580px;overflow:hidden;" size="225">
+					<ui:include src="menu.xhtml" />
+				</p:layoutUnit>
+				
+				<p:layoutUnit	styleClass="layoutUnitCenter" 	position="center">
+					<h:form id="mainForm">
+						<p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
+						<ui:insert name="content" />
+					</h:form>
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="east" size="0" style="width:0px; display:none;" id="east">
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="south" resizable="true" id="south">
+					<ui:include src="footer.xhtml" />
+				</p:layoutUnit>
+
+			</p:layout>
+			
+		</h:head>
+		
+		<body>
+		
+	<p:dialog header="Incluir" widgetVar="dialogIncluir" modal="true" id="Incluir" dynamic="true">
+		<h:form id="formIncluir">
+			<ui:include src="/pages/protected/users/incluirDocumento.xhtml" />
+	 	</h:form>
+	</p:dialog>
+	<p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true" id="Alterar" dynamic="true">
+		<h:form id="formAlterar">
+			<ui:include src="/pages/protected/users/atualizarDocumento.xhtml" />
+	 	</h:form>
+	</p:dialog>
+	<p:dialog header="Deletar" widgetVar="dialogDeletar" modal="true" id="Deletar" dynamic="true">
+		<h:form id="formDeletar">
+			<ui:include src="/pages/protected/users/deletarDocumento.xhtml" />
+	 	</h:form>
+	</p:dialog>
+	<p:dialog header="Anexar" widgetVar="dialogAnexar" modal="true" id="Anexar" dynamic="true">
+		<h:form id="formAnexar" enctype="multipart/form-data">
+			<ui:include src="/pages/protected/users/incluirArquivoAnexo.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="incluirTipoDocumento" widgetVar="dialogIncluirTipoDocumento" modal="true" id="incluirTipoDocumento" dynamic="true">
+		<h:form id="formIncluirTipoDocumento">
+			<ui:include src="/pages/protected/admin/incluirTipoDocumento.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="alterarTipoDocumento" widgetVar="dialogAlterarTipoDocumento" modal="true" id="alterarTipoDocumento" dynamic="true">
+		<h:form id="formAlterarTipoDocumento">
+			<ui:include src="/pages/protected/admin/atualizarTipoDocumento.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="deletarTipoDocumento" widgetVar="dialogDeletarTipoDocumento" modal="true" id="deletarTipoDocumento" dynamic="true">
+		<h:form id="formDeletarTipoDocumento">
+			<ui:include src="/pages/protected/admin/deletarTipoDocumento.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="incluirCliente" widgetVar="dialogIncluirCliente" modal="true" id="incluirCliente" dynamic="true">
+		<h:form id="formIncluirCliente">
+			<ui:include src="/pages/protected/admin/incluirCliente.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="alterarCliente" widgetVar="dialogAlterarCliente" modal="true" id="alterarCliente" dynamic="true">
+		<h:form id="formAlterarCliente">
+			<ui:include src="/pages/protected/admin/atualizarCliente.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="deletarCliente" widgetVar="dialogDeletarCliente" modal="true" id="deletarCliente" dynamic="true">
+		<h:form id="formDeletarCliente">
+			<ui:include src="/pages/protected/admin/deletarCliente.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="incluirUsuario" widgetVar="dialogIncluirUsuario" modal="true" id="incluirUsuario" dynamic="true">
+		<h:form id="formIncluirUsuario">
+			<ui:include src="/pages/protected/admin/incluirUsuario.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="alterarUsuario" widgetVar="dialogAlterarUsuario" modal="true" id="alterarUsuario" dynamic="true">
+		<h:form id="formAlterarUsuario">
+			<ui:include src="/pages/protected/admin/atualizarUsuario.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="deletarUsuario" widgetVar="dialogDeletarUsuario" modal="true" id="deletarUsuario" dynamic="true">
+		<h:form id="formDeletarUsuario">
+			<ui:include src="/pages/protected/admin/deletarUsuario.xhtml" />
+		</h:form>
+	</p:dialog>
+	<p:dialog header="alterarParametro" widgetVar="dialogAlterarParametro" modal="true" id="alterarParametro" dynamic="true">
+		<h:form id="formAlterarParametro">
+			<ui:include src="/pages/protected/admin/atualizarParametro.xhtml" />
+		</h:form>
+	</p:dialog>
+		
+		
+	</body>
+
+</html>		

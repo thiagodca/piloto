@@ -1,23 +1,41 @@
 package model;
 
-import javax.servlet.http.Part;
+import org.primefaces.model.UploadedFile;
 
 public class ArquivoUpload {
 
+	public ArquivoUpload(UploadedFile arquivo){
+		this.arquivo = arquivo;
+		
+		obtemNomeCaminho();
+	}
+	
+	private String nome;
+	
 	private String caminho;
+	
+	private void obtemNomeCaminho(){
+	     
+	   String filename = arquivo.getFileName();
+	   this.caminho = filename;
+       this.nome = filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
+   
+	}
 	
 	private String codigoCliente;
 	
-	private String nomeArquivo;
-	
-	private Part arquivo;
+	private UploadedFile arquivo;
 
-	public String getCaminho() {
-		return caminho;
+	public String getNome() {
+		return this.nome;
 	}
 
-	public void setCaminho(String caminho) {
-		this.caminho = caminho;
+	public String getCaminho() {
+		return this.caminho;
+	}
+
+	public UploadedFile getArquivo() {
+		return arquivo;
 	}
 
 	public String getCodigoCliente() {
@@ -26,22 +44,5 @@ public class ArquivoUpload {
 
 	public void setCodigoCliente(String codigoCliente) {
 		this.codigoCliente = codigoCliente;
-	}
-
-	public String getNomeArquivo() {
-		return nomeArquivo;
-	}
-
-	public void setNomeArquivo(String nomeArquivo) {
-		this.nomeArquivo = nomeArquivo;
-	}
-
-	public Part getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(Part arquivo) {
-		this.arquivo = arquivo;
-	}
-	
+	}	
 }

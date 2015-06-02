@@ -1,44 +1,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
 <h:body>
-    <h:form enctype="multipart/form-data">
-        <h:messages/>
-
-        <h3>Incluindo anexo para documento #{arquivoAnexoBean.documento.titulo}, #{arquivoAnexoBean.documento.id}</h3>
-        <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-        	<h:inputHidden value="#{arquivoAnexoBean.documento.id}" />            
-            <h:inputFile value="#{arquivoAnexoBean.file}"></h:inputFile>
-        </h:panelGrid>
-        <h:panelGrid columns="2">
-            <h:commandButton action="#{arquivoAnexoBean.incluirArquivoAnexoFim()}" value="#{msgs.incluir}" />
-            <h:commandButton action="#{arquivoAnexoBean.listarDocumentos()}" value="#{msgs.cancelar}" immediate="true" />
-        </h:panelGrid>
+		
+		<p:growl id="msg"></p:growl>
+        <p:panel id="panel" header="Incluindo anexo para documento #{documentoBean.documento.id}, #{documentoBean.codigoCliente}">
         
-        <h:dataTable value="#{arquivoAnexoBean.listaArquivosAnexos}" var="arquivoAnexo" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.arquivoAnexoNome}
-                </f:facet>
- 
-                #{arquivoAnexo.nome}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.arquivoAnexoDataInclusao}
-                </f:facet>
- 
- 				<h:outputLabel value="#{arquivoAnexo.dataInclusao.time}">
-         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-      			</h:outputLabel>
-            </h:column>
-		</h:dataTable>        
-        <br/>
-    </h:form>
+			<p:messages/>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+	    		<p:fileUpload value="#{documentoBean.arquivo}" mode="advanced" cancelLabel="Cancelar" uploadLabel="Enviar" update="msg"
+                                fileUploadListener="#{documentoBean.incluirArquivoAnexoFim}">
+					<f:attribute name="idDocumento" value="#{documentoBean.documento.id}" />
+					<f:attribute name="codigoCliente" value="#{documentoBean.codigoCliente}" />
+                </p:fileUpload>        
+	        </h:panelGrid>
+
+	        <p:dataTable id="tabelaAnexos" value="#{documentoBean.listaArquivosAnexos}" var="arquivoAnexo">
+	            <p:column>
+	                <f:facet name="header">
+	                    #{msgs.arquivoAnexoNome}
+	                </f:facet>
+	 
+	                #{arquivoAnexo.nome}
+	            </p:column>
+	            <p:column>
+	                <f:facet name="header">
+	                    #{msgs.arquivoAnexoDataInclusao}
+	                </f:facet>
+	 
+	 				<h:outputLabel value="#{arquivoAnexo.dataInclusao.time}">
+	         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+	      			</h:outputLabel>
+	            </p:column>
+			</p:dataTable>        
+        	<br/>
+        </p:panel>
+    
 </h:body>
+
 </html>

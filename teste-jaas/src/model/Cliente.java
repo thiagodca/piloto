@@ -1,10 +1,12 @@
 package model;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -25,6 +27,9 @@ public class Cliente implements Serializable{
 	private String cpfCnpj;
 
 	private String codigo;
+	
+	@OneToMany
+	private List<Documento> documentos;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataInclusao;
@@ -94,5 +99,11 @@ public class Cliente implements Serializable{
 	}
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+	public List<Documento> getDocumentos() {
+		return documentos;
+	}
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	} 
 }

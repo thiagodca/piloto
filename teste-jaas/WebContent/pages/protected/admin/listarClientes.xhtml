@@ -1,87 +1,87 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <h:outputStylesheet library="css" name="main.css" />
-</h:head>
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/templates/template.xhtml">
+	
+<ui:define name="content">
+
 <h:body>
-    <h:form>
- 		<h3>#{msgs.loginHello}: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
+
+	<h:form id="formClientes">
  
-        <h:messages />
-        <h:dataTable value="#{clienteBean.listaClientes}" var="cliente" styleClass="table" headerClass="tableColumnsHeader" rowClasses="tableFirstLine,tableNextLine" >
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.clienteCodigo}
-                </f:facet>
- 
-                #{cliente.codigo}
-            </h:column>            
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.clienteRazaoSocial}
-                </f:facet>
- 
-                #{cliente.razaoSocial}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.clienteCpfCnpj}
-                </f:facet>
- 
-                #{cliente.cpfCnpj}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.clienteUsuarioCriacao}
-                </f:facet>
- 
-                #{cliente.usuarioCriacao.login}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.clienteDataCriacao}
-                </f:facet>
- 
- 				<h:outputLabel value="#{cliente.dataInclusao.time}">
-         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-      			</h:outputLabel>
-            </h:column>
-			<h:column>
-                <f:facet name="header">
-                    #{msgs.clienteUsuarioAlteracao}
-                </f:facet>
- 
-                #{cliente.usuarioAlteracao.login}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    #{msgs.clienteDataAlteracao}
-                </f:facet>
- 
- 				<h:outputLabel value="#{cliente.dataAlteracao.time}">
-         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-      			</h:outputLabel>
-            </h:column>            
-            <h:column>
-                <h:panelGrid columns="2">
-                    <!-- Always save the id as hidden when you use a request scope MB -->
-                    <h:inputHidden value="#{cliente.id}" />
- 
-                    <h:commandButton action="#{clienteBean.atualizarClienteInicio()}" value="#{msgs.atualizar}" rendered="#{loginBean.usuarioAdmin}" >
-                        <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
-                    </h:commandButton>
-                    <h:commandButton action="#{clienteBean.deletarClienteInicio()}" value="#{msgs.deletar}" rendered="#{loginBean.usuarioAdmin}" >
-                        <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
-                    </h:commandButton>
-                </h:panelGrid>
-            </h:column>
-        </h:dataTable>
-        <!-- This button is displayed to the user, just to you see the error msg  -->
-        <h:commandButton action="incluirCliente" value="#{msgs.incluir} #{msgs.cliente}" />
-    </h:form>
+	    <p:messages />
+		<p:dataTable value="#{clienteBean.listaClientes}" var="cliente" >
+			<p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteCodigo}
+				</f:facet>
+		
+				#{cliente.codigo}
+			</p:column>            
+		    <p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteRazaoSocial}
+				</f:facet>
+		
+		        #{cliente.razaoSocial}
+			</p:column>
+		    <p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteCpfCnpj}
+				</f:facet>
+		
+		        #{cliente.cpfCnpj}
+			</p:column>
+		    <p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteUsuarioCriacao}
+				</f:facet>
+		
+		        #{cliente.usuarioCriacao.login}
+			</p:column>
+		    <p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteDataCriacao}
+				</f:facet>
+		
+				<h:outputLabel value="#{cliente.dataInclusao.time}">
+		      		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+				</h:outputLabel>
+			</p:column>
+			<p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteUsuarioAlteracao}
+				</f:facet>
+		
+		        #{cliente.usuarioAlteracao.login}
+			</p:column>
+		    <p:column>
+		    	<f:facet name="header">
+		        	#{msgs.clienteDataAlteracao}
+				</f:facet>
+		
+				<h:outputLabel value="#{cliente.dataAlteracao.time}">
+		      		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+				</h:outputLabel>
+			</p:column>            
+		    <p:column>
+		    	<h:panelGrid columns="2">
+		            <p:commandButton update=":#{p:component('formAlterarCliente')}" oncomplete="PF('dialogAlterarCliente').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+		                <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
+		            </p:commandButton>
+		            <p:commandButton update=":#{p:component('formDeletarCliente')}" oncomplete="PF('dialogDeletarCliente').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+		                <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
+		            </p:commandButton>
+		            <h:inputHidden value="#{cliente.id}" />
+		        </h:panelGrid>
+		    </p:column>
+		</p:dataTable>
+		<p:commandButton update=":#{p:component('formIncluirCliente')}" oncomplete="PF('dialogIncluirCliente').show()" immediate="true" value="#{msgs.incluir}" icon="ui-icon-star"/>
+	</h:form>
 </h:body>
-</html>
+	
+</ui:define>
+</ui:composition>

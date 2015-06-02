@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@NamedQuery(name="ArquivoAnexo.listarPorDocumento", query="select a from ArquivoAnexo a where a.documento.id = :id")
+@NamedQuery(name="ArquivoAnexo.listarPorDocumento", query="SELECT a FROM ArquivoAnexo a WHERE a.documento.id = :id")
 public class ArquivoAnexo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
