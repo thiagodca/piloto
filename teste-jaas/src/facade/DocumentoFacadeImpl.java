@@ -15,7 +15,7 @@ public class DocumentoFacadeImpl implements DocumentoFacade{
 
 	@Override
 	public List<Documento> listarTodos() {
-		List<Documento> result = documentoDAO.findAll();
+		List<Documento> result = documentoDAO.listarTodos();
 		return result;
 	}
 	
@@ -38,5 +38,9 @@ public class DocumentoFacadeImpl implements DocumentoFacade{
 	public void deletar(Documento documento) {
 		documentoDAO.delete(documento.getId(), Documento.class);
 		
+	}
+	@Override
+	public List<Documento> listarDocumentosPorCodigoCliente(String codigoCliente){
+		return documentoDAO.listarPorCliente(codigoCliente);
 	}
 }

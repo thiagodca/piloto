@@ -15,7 +15,9 @@ public interface ClienteFacade {
  
     public abstract void deletar(Cliente cliente);
  
-    public abstract Cliente buscar(long entityID);
- 
+	public abstract Cliente buscarClientePorId(long id);
+	
+	public abstract Cliente buscarClientePorCodigo(String codigoCliente);
+	
     public abstract List<Cliente> listarTodos();
 }

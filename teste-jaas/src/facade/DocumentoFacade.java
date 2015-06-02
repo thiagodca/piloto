@@ -18,4 +18,6 @@ public interface DocumentoFacade {
     public abstract Documento buscar(long entityID);
  
     public abstract List<Documento> listarTodos();
+    
+    public abstract List<Documento> listarDocumentosPorCodigoCliente(String codigoCliente);
 }

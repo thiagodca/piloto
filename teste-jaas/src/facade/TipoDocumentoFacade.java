@@ -15,7 +15,7 @@ public interface TipoDocumentoFacade {
  
     public abstract void deletar(TipoDocumento tipoDocumento);
  
-    public abstract TipoDocumento buscar(int entityID);
+    public abstract TipoDocumento buscar(long entityID);
  
     public abstract List<TipoDocumento> listarTodos();
 }

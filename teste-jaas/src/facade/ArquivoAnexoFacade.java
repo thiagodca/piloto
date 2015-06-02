@@ -17,5 +17,5 @@ public interface ArquivoAnexoFacade {
  
     public abstract ArquivoAnexo buscar(long entityID);
  
-    public abstract List<ArquivoAnexo> listarTodos(long idDocumento);
+    public abstract List<ArquivoAnexo> listarAnexosPorDocumento(long idDocumento);
 }

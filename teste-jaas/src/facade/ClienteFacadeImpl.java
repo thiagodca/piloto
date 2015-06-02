@@ -20,8 +20,8 @@ public class ClienteFacadeImpl implements ClienteFacade{
 	}
 	
 	@Override
-	public Cliente buscar(long id){
-		return clienteDAO.find(id);
+	public Cliente buscarClientePorId(long id){
+		return clienteDAO.buscar(id);
 	}
 	
 	@Override
@@ -37,5 +37,10 @@ public class ClienteFacadeImpl implements ClienteFacade{
 	@Override
 	public void deletar(Cliente cliente) {
 		clienteDAO.delete(cliente.getId(), Cliente.class);
+	}
+	
+	@Override
+	public Cliente buscarClientePorCodigo(String codigoCliente){
+		return clienteDAO.buscar(codigoCliente);
 	}
 }

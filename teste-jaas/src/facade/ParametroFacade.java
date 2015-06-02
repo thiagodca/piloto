@@ -17,9 +17,5 @@ public interface ParametroFacade {
  
     public abstract Parametro buscar(long entityID);
  
-    public abstract List<Parametro> buscarPorTipo(long idTipo);
-    
-    public abstract Parametro buscarPorTipoENome(long idTipo, String nome);
-    
     public abstract List<Parametro> listarTodos();
 }

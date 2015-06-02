@@ -20,7 +20,7 @@ public class TipoDocumentoFacadeImpl implements TipoDocumentoFacade{
 	}
 	
 	@Override
-	public TipoDocumento buscar(int id){
+	public TipoDocumento buscar(long id){
 		return tipoDocumentoDAO.find(id);
 	}
 	
