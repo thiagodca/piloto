@@ -5,10 +5,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:panel id="panel" header="${msgs.incluirDocumentoHeader}">
-       
-		<p:messages/>
-
+	<h:form>
+	    <p:messages/>
+       	
+       	<h3>${msgs.incluirDocumentoHeader}</h3>
 		<h:panelGrid columns="3" cellpadding="5">
 			            
             <p:outputLabel for="codigoClienteDocumento" value="#{msgs.documentoCodigoCliente}" />
@@ -30,10 +30,10 @@
             <p:message for="descricaoDocumento" display="icon" />
             
         </h:panelGrid>
-        <h:panelGrid columns="1">
-            <p:commandButton update=":#{p:component('formPrincipal')}" actionListener="#{documentoBean.incluirDocumentoFim}" value="#{msgs.incluir}" />
+        <h:panelGrid>
+            <p:commandButton update=":formPrincipal:tabelaDocumentos" actionListener="#{documentoBean.incluirDocumentoFim}" value="#{msgs.incluir}" />
         </h:panelGrid>
-	</p:panel>
-    <br/>
+
+	</h:form>
        
 </ui:composition>

@@ -5,12 +5,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:messages/>
+	<h:form>
+		<p:messages/>
 
-    <h3>#{msgs.deletarClienteHeader}: #{clienteBean.cliente.razaoSocial}?</h3>
-    <h:inputHidden value="#{clienteBean.cliente.id}" />
-    <h:panelGrid>
-        <p:commandButton update=":#{p:component('formClientes')}" actionListener="#{clienteBean.deletarClienteFim}" value="#{msgs.deletar}" />
-    </h:panelGrid>
-    <br/>
+	    <h3>#{msgs.deletarClienteHeader}: #{clienteBean.cliente.razaoSocial}?</h3>
+	    <h:inputHidden value="#{clienteBean.cliente.id}" />
+	    <h:panelGrid>
+	        <p:commandButton update=":formClientes:tabelaClientes" actionListener="#{clienteBean.deletarClienteFim}" value="#{msgs.deletar}" />
+	    </h:panelGrid>
+	    
+	</h:form>
 </ui:composition>

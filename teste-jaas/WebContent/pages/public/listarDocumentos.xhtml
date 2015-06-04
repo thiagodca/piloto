@@ -1,100 +1,118 @@
-<ui:composition 
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/pages/templates/template.xhtml">
-	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
 <ui:define name="content">
 
-<h:body>
-
-	<h:form id="formPrincipal">
- 
-        <p:messages />
-        
-        <p:outputLabel for="codigoCliente" value="#{msgs.documentoCodigoCliente}" />
-        <p:inputText id="codigoCliente" value="#{documentoBean.codigoCliente}" />
-
-		<p:commandButton value="Listar" update="tabelaDocumentos" actionListener="#{documentoBean.obterListaDeDocumentos}" />
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
 		
-        <p:dataTable id="tabelaDocumentos" value="#{documentoBean.listaDeDocumentos}" var="documento">
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.documentoTipoDocumento}
-                </f:facet>
- 
-                #{documento.tipoDocumento.nomeTipo}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.documentoTitulo}
-                </f:facet>
- 
-                #{documento.titulo}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.documentoDescricao}
-                </f:facet>
- 
-                #{documento.descricao}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.documentoUsuarioCriacao}
-                </f:facet>
- 
-                #{documento.usuarioCriacao.login}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.documentoDataCriacao}
-                </f:facet>
- 
- 				<h:outputLabel value="#{documento.dataInclusao.time}">
-         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-      			</h:outputLabel>
-            </p:column>
-			<p:column>
-                <f:facet name="header">
-                    #{msgs.documentoUsuarioAlteracao}
-                </f:facet>
- 
-                #{documento.usuarioAlteracao.login}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.documentoDataAlteracao}
-                </f:facet>
- 
- 				<h:outputLabel value="#{documento.dataAlteracao.time}">
-         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-      			</h:outputLabel>
-            </p:column>
-            <p:column>
-                <p:panel columns="3">
-                    <p:commandButton update=":#{p:component('formAlterar')}" oncomplete="PF('dialogAlterar').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
+		.ui-datatable td:nth-child(6) {
+    		padding: 5;
+    		text-align: center;
+		}
+		</style>
+	</h:head>
+	<h:body>
+
+		<h:form id="formPrincipal">
+	 		
+	 		<p:panel id="panel" header="Documentos">
+	        
+	        <p:messages />
+	        
+	        <p:outputLabel for="codigoCliente" value="#{msgs.documentoCodigoCliente}" />
+	        <p:inputText id="codigoCliente" value="#{documentoBean.codigoCliente}" />
+	
+			<p:commandButton value="Listar" update="tabelaDocumentos" actionListener="#{documentoBean.obterListaDeDocumentos}" />
+			
+			<p:separator />
+			
+	        <p:dataTable id="tabelaDocumentos" value="#{documentoBean.listaDeDocumentos}" var="documento"
+	        	 emptyMessage="Nenhum documento encontrado." >
+	
+	            <p:column headerText="#{msgs.documentoTipoDocumento}">
+	                #{documento.tipoDocumento.nomeTipo}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.documentoTitulo}">
+	                #{documento.titulo}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.documentoDescricao}">
+	                #{documento.descricao}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.documentoDataAlteracao}"> 
+	 				<h:outputLabel value="#{documento.dataAlteracao.time}">
+	         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+	      			</h:outputLabel>
+	            </p:column>
+	            
+				<p:column headerText="#{msgs.documentoUsuarioAlteracao}"> 
+	                #{documento.usuarioAlteracao.login}
+	            </p:column>
+	            
+	            <p:column width="100">
+                    <p:commandButton update="atualizarDocumento" oncomplete="PF('dialogAtualizarDocumento').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
                     </p:commandButton>
-                    <p:commandButton update=":#{p:component('formDeletar')}" oncomplete="PF('dialogDeletar').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
+                    <p:commandButton update="deletarDocumento" oncomplete="PF('dialogDeletarDocumento').show()" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
                     </p:commandButton>
-					<p:commandButton update=":#{p:component('formAnexar')}" oncomplete="PF('dialogAnexar').show()" immediate="true" title="#{msgs.incluirArquivoAnexo}" icon="ui-icon-trash" rendered="#{loginBean.usuarioDigitador}" >
+					<p:commandButton update="anexarDocumento" oncomplete="PF('dialogAnexarDocumento').show()" title="#{msgs.incluirArquivoAnexo}" icon="ui-icon-document" rendered="#{loginBean.usuarioDigitador}" >
                         <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
                     </p:commandButton>
                 	<h:inputHidden value="#{documento.id}" />
-                </p:panel>
-            </p:column>
-        </p:dataTable>
-        <p:commandButton actionListener="#{documentoBean.incluirDocumentoInicio}" oncomplete="PF('dialogIncluir').show()" immediate="true" value="#{msgs.incluir}" icon="ui-icon-star" rendered="#{loginBean.usuarioDigitador}" >
-            <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
-        </p:commandButton> 
-    </h:form>
+	            </p:column>
+	            
+	        </p:dataTable>
+	        <br />
+	        <p:commandButton actionListener="#{documentoBean.incluirDocumentoInicio}" oncomplete="PF('dialogIncluirDocumento').show()" value="#{msgs.incluir}" icon="ui-icon-plus" rendered="#{loginBean.usuarioDigitador}" >
+	            <f:setPropertyActionListener target="#{documentoBean.documento}" value="#{documento}" />
+	        </p:commandButton>
+	        
+	    </p:panel>    
+	    </h:form>
+	    	
+		<p:dialog widgetVar="dialogIncluirDocumento" id="incluirDocumento" header="Inclusao de Documento"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)" closeOnEscape="true" >
+		    <ui:insert name="divIncluirDocumento">
+		        <ui:include src="/pages/protected/users/incluirDocumento.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogAtualizarDocumento" id="atualizarDocumento" header="Alteracao de Documento"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)" closeOnEscape="true">
+		    <ui:insert name="divAtualizarDocumento">
+		        <ui:include src="/pages/protected/users/atualizarDocumento.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogDeletarDocumento" id="deletarDocumento" header="Exclusao de Documento"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)" closeOnEscape="true">
+		    <ui:insert name="divDeletarDocumento">
+		        <ui:include src="/pages/protected/users/deletarDocumento.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogAnexarDocumento" id="anexarDocumento" header="Inclusao de Anexo"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)" closeOnEscape="true"
+			width="600">
+		    <ui:insert name="divAnexarDocumento">
+		        <ui:include src="/pages/protected/users/incluirArquivoAnexo.xhtml" />
+		    </ui:insert>
+		</p:dialog>
     	
-</h:body>
+	</h:body>
 
 </ui:define>
-
 </ui:composition>
+</html>

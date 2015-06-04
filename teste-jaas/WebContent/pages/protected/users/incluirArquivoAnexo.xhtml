@@ -1,46 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:body>
+	<h:form enctype="multipart/form-data">
 		
 		<p:growl id="msg"></p:growl>
-        <p:panel id="panel" header="Incluindo anexo para documento #{documentoBean.documento.id}, #{documentoBean.codigoCliente}">
+        <p:panel id="panel" header="Incluindo anexo para documento #{documentoBean.documento.titulo}">
         
 			<p:messages/>
 
 			<h:panelGrid columns="3" cellpadding="5">
 
-	    		<p:fileUpload value="#{documentoBean.arquivo}" mode="advanced" cancelLabel="Cancelar" uploadLabel="Enviar" update="msg"
-                                fileUploadListener="#{documentoBean.incluirArquivoAnexoFim}">
+	    		<p:fileUpload value="#{documentoBean.arquivo}" mode="advanced" label="Selecionar" 
+	    			cancelLabel="Cancelar" uploadLabel="Enviar" update="msg, tabelaAnexos"
+                    fileUploadListener="#{documentoBean.incluirArquivoAnexoFim}">
+					
 					<f:attribute name="idDocumento" value="#{documentoBean.documento.id}" />
 					<f:attribute name="codigoCliente" value="#{documentoBean.codigoCliente}" />
+                
                 </p:fileUpload>        
+	        
 	        </h:panelGrid>
 
-	        <p:dataTable id="tabelaAnexos" value="#{documentoBean.listaArquivosAnexos}" var="arquivoAnexo">
-	            <p:column>
-	                <f:facet name="header">
-	                    #{msgs.arquivoAnexoNome}
-	                </f:facet>
-	 
+	        <p:dataTable id="tabelaAnexos" value="#{documentoBean.listaArquivosAnexos}" var="arquivoAnexo"
+	        	emptyMessage="Nenhum anexo encontrado.">
+				
+	            <p:column headerText="#{msgs.arquivoAnexoNome}">
 	                #{arquivoAnexo.nome}
 	            </p:column>
-	            <p:column>
-	                <f:facet name="header">
-	                    #{msgs.arquivoAnexoDataInclusao}
-	                </f:facet>
-	 
+
+	            <p:column headerText="#{msgs.arquivoAnexoDataInclusao}">
 	 				<h:outputLabel value="#{arquivoAnexo.dataInclusao.time}">
 	         			<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
 	      			</h:outputLabel>
 	            </p:column>
-			</p:dataTable>        
-        	<br/>
-        </p:panel>
-    
-</h:body>
 
-</html>
+			</p:dataTable>        
+		</p:panel>    
+	</h:form>
+
+</ui:composition>

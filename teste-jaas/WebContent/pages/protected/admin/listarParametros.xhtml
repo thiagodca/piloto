@@ -1,59 +1,74 @@
-<ui:composition 
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/pages/templates/template.xhtml">
-	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
 <ui:define name="content">
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
+		
+		.ui-datatable td:nth-child(5) {
+    		padding: 5;
+    		text-align: center;
+		}
+		</style>
+	</h:head>
+	<h:body>
+	
+		<h:form id="formParametros">
 
-<h:body>
+			<p:panel id="panel" header="Parametros">
+	 
+		    <p:messages />
+	        <p:dataTable id="tabelaParametros" value="#{parametroBean.listaParametros}" var="parametro">
 
-	<h:form id="formParametros">
- 
-	    <p:messages />
-        <p:dataTable value="#{parametroBean.listaParametros}" var="parametro">
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.parametroTipoParametro}
-                </f:facet>
- 
-                #{parametro.tipoParametro.nome}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.parametroNome}
-                </f:facet>
- 
-                #{parametro.nome}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.parametroValor}
-                </f:facet>
- 
-                #{parametro.valor}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.parametroDescricao}
-                </f:facet>
- 
-                #{parametro.descricao}
-            </p:column>
-            <p:column>
-                <h:panelGrid columns="2"> 
-                    <p:commandButton update=":#{p:component('formAlterarParametro')}" oncomplete="PF('dialogAlterarParametro').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+	            <p:column headerText="#{msgs.parametroTipoParametro}">
+	                #{parametro.tipoParametro.nome}
+	            </p:column>
+
+	            <p:column headerText="#{msgs.parametroNome}">
+	                #{parametro.nome}
+	            </p:column>
+
+	            <p:column headerText="#{msgs.parametroValor}">
+	                #{parametro.valor}
+	            </p:column>
+
+	            <p:column headerText="#{msgs.parametroDescricao}">	 
+	                #{parametro.descricao}
+	            </p:column>
+	            
+	            <p:column width="60"> 
+                    <p:commandButton update="atualizarParametro" oncomplete="PF('dialogAtualizarParametro').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil" rendered="#{loginBean.usuarioAdmin}" >
                         <f:setPropertyActionListener target="#{parametroBean.parametro}" value="#{parametro}" />
                     </p:commandButton>
                     <h:inputHidden value="#{parametro.id}" />
-                </h:panelGrid>
-            </p:column>
-        </p:dataTable>
-    </h:form>
-</h:body>
+	            </p:column>
+	        </p:dataTable>
+	        
+	        </p:panel>
+	        
+	    </h:form>
+
+		<p:dialog widgetVar="dialogAtualizarParametro" id="atualizarParametro" header="Alteracao de Parametro"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divAtualizarParametro">
+		        <ui:include src="/pages/protected/admin/atualizarParametro.xhtml" />
+		    </ui:insert>
+		</p:dialog>		
+
+	</h:body>
 
 </ui:define>
 
 </ui:composition>
+</html>

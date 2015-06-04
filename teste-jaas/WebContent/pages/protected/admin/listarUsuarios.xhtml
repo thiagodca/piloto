@@ -1,50 +1,85 @@
-<ui:composition 
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/pages/templates/template.xhtml">
-	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
 <ui:define name="content">
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
+		
+		.ui-datatable td:nth-child(3) {
+    		padding: 5;
+    		text-align: center;
+		}
+		</style>
+	</h:head>
+	<h:body>
+	
+		<h:form id="formUsuarios">
 
-<h:body>
-
-	<h:form id="formUsuarios">
- 
-	    <p:messages />
-        <p:dataTable value="#{usuarioBean.listaUsuarios}" var="usuario" >
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.usuarioLogin}
-                </f:facet>
- 
-                #{usuario.login}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.usuarioNome}
-                </f:facet>
- 
-                #{usuario.nome}
-            </p:column>
-            <p:column>
-                <h:panelGrid columns="2">
-                    <!-- Always save the id as hidden when you use a request scope MB -->
+			<p:panel id="panel" header="Usuarios">
+	 
+		    <p:messages />
+	        <p:dataTable id="tabelaUsuarios" value="#{usuarioBean.listaUsuarios}" var="usuario" >
+	
+	            <p:column headerText="#{msgs.usuarioLogin}">
+	                #{usuario.login}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.usuarioNome}">
+	                #{usuario.nome}
+	            </p:column>
+	
+	            <p:column width="80">
                     <h:inputHidden value="#{usuario.login}" />
  
-                    <p:commandButton update=":#{p:component('formAlterarUsuario')}" oncomplete="PF('dialogAlterarUsuario').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+                    <p:commandButton update="atualizarUsuario" oncomplete="PF('dialogAtualizarUsuario').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil" rendered="#{loginBean.usuarioAdmin}" >
                         <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
                     </p:commandButton>
-                    <p:commandButton update=":#{p:component('formDeletarUsuario')}" oncomplete="PF('dialogDeletarUsuario').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+                    <p:commandButton update="deletarUsuario" oncomplete="PF('dialogDeletarUsuario').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
                         <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
                     </p:commandButton>
-                </h:panelGrid>
-            </p:column>
-        </p:dataTable>
-        <p:commandButton update=":#{p:component('formIncluirUsuario')}" oncomplete="PF('dialogIncluirUsuario').show()" immediate="true" value="#{msgs.incluir} #{msgs.usuario}" icon="ui-icon-star"/>
-    </h:form>
-</h:body>
+	            </p:column>
+	        </p:dataTable>
+	        <br />
+	        <p:commandButton oncomplete="PF('dialogIncluirUsuario').show()" value="#{msgs.incluir}" icon="ui-icon-plus" >
+	    		<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+	        </p:commandButton> 
+	   	
+	   		</p:panel>
+	   	
+	    </h:form>
+	    
+		<p:dialog widgetVar="dialogIncluirUsuario" id="incluirUsuario" header="Inclusao de Usuario"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divIncluirUsuario">
+		        <ui:include src="/pages/protected/admin/incluirUsuario.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogAtualizarUsuario" id="atualizarUsuario" header="Alteracao de Usuario"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divAtualizarUsuario">
+		        <ui:include src="/pages/protected/admin/atualizarUsuario.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogDeletarUsuario" id="deletarUsuario" header="Exclusao de Usuario"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divDeletarUsuario">
+		        <ui:include src="/pages/protected/admin/deletarUsuario.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+	    
+	</h:body>
 
 </ui:define>
 </ui:composition>
+</html>

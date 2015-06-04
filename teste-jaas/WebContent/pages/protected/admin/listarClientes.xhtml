@@ -1,87 +1,111 @@
-<ui:composition 
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/pages/templates/template.xhtml">
-	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
 <ui:define name="content">
 
-<h:body>
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
+		
+		.ui-datatable td:nth-child(8) {
+    		padding: 5;
+    		text-align: center;
+		}
+		</style>
+	</h:head>
+	<h:body>
 
-	<h:form id="formClientes">
- 
-	    <p:messages />
-		<p:dataTable value="#{clienteBean.listaClientes}" var="cliente" >
-			<p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteCodigo}
-				</f:facet>
-		
-				#{cliente.codigo}
-			</p:column>            
-		    <p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteRazaoSocial}
-				</f:facet>
-		
-		        #{cliente.razaoSocial}
-			</p:column>
-		    <p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteCpfCnpj}
-				</f:facet>
-		
-		        #{cliente.cpfCnpj}
-			</p:column>
-		    <p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteUsuarioCriacao}
-				</f:facet>
-		
-		        #{cliente.usuarioCriacao.login}
-			</p:column>
-		    <p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteDataCriacao}
-				</f:facet>
-		
-				<h:outputLabel value="#{cliente.dataInclusao.time}">
-		      		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-				</h:outputLabel>
-			</p:column>
-			<p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteUsuarioAlteracao}
-				</f:facet>
-		
-		        #{cliente.usuarioAlteracao.login}
-			</p:column>
-		    <p:column>
-		    	<f:facet name="header">
-		        	#{msgs.clienteDataAlteracao}
-				</f:facet>
-		
-				<h:outputLabel value="#{cliente.dataAlteracao.time}">
-		      		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-				</h:outputLabel>
-			</p:column>            
-		    <p:column>
-		    	<h:panelGrid columns="2">
-		            <p:commandButton update=":#{p:component('formAlterarCliente')}" oncomplete="PF('dialogAlterarCliente').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+		<h:form id="formClientes">
+	 
+	 		<p:panel id="panel" header="Clientes">
+	 		
+		    <p:messages />
+		    
+			<p:dataTable id="tabelaClientes" value="#{clienteBean.listaClientes}" var="cliente" rowKey="cliente.codigo"
+				emptyMessage="Nenhum cliente encontrado.">
+			
+				<p:column headerText="#{msgs.clienteCodigo}">
+					#{cliente.codigo}
+				</p:column>            
+			
+			    <p:column headerText="#{msgs.clienteRazaoSocial}">		
+			        #{cliente.razaoSocial}
+				</p:column>
+			
+			    <p:column headerText="#{msgs.clienteCpfCnpj}">		
+			        #{cliente.cpfCnpj}
+				</p:column>
+			
+			    <p:column headerText="#{msgs.clienteUsuarioCriacao}">
+			        #{cliente.usuarioCriacao.login}
+				</p:column>
+			
+			    <p:column headerText="#{msgs.clienteDataCriacao}">
+					<h:outputLabel value="#{cliente.dataInclusao.time}">
+			      		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+					</h:outputLabel>
+				</p:column>
+			
+				<p:column headerText="#{msgs.clienteUsuarioAlteracao}">
+			        #{cliente.usuarioAlteracao.login}
+				</p:column>
+			
+			    <p:column headerText="#{msgs.clienteDataAlteracao}">		
+					<h:outputLabel value="#{cliente.dataAlteracao.time}">
+			      		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+					</h:outputLabel>
+				</p:column>
+			
+			    <p:column width="80">
+		            <p:commandButton update="atualizarCliente" oncomplete="PF('dialogAtualizarCliente').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil" rendered="#{loginBean.usuarioAdmin}" >
 		                <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
 		            </p:commandButton>
-		            <p:commandButton update=":#{p:component('formDeletarCliente')}" oncomplete="PF('dialogDeletarCliente').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+		            <p:commandButton update="deletarCliente" oncomplete="PF('dialogDeletarCliente').show()" title="#{msgs.deletar}" icon="ui-icon-gear" rendered="#{loginBean.usuarioAdmin}" >
 		                <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
 		            </p:commandButton>
 		            <h:inputHidden value="#{cliente.id}" />
-		        </h:panelGrid>
-		    </p:column>
-		</p:dataTable>
-		<p:commandButton update=":#{p:component('formIncluirCliente')}" oncomplete="PF('dialogIncluirCliente').show()" immediate="true" value="#{msgs.incluir}" icon="ui-icon-star"/>
-	</h:form>
-</h:body>
+			    </p:column>
+			
+			</p:dataTable>
+			<br />
+	        <p:commandButton actionListener="#{clienteBean.incluirClienteFim}" oncomplete="PF('dialogIncluirCliente').show()" value="#{msgs.incluir}" icon="ui-icon-plus" rendered="#{loginBean.usuarioAdmin}" >
+				<f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
+	        </p:commandButton> 
+		
+			</p:panel>
 	
-</ui:define>
-</ui:composition>
+		</h:form>
+
+		<p:dialog widgetVar="dialogAtualizarCliente" id="atualizarCliente" header="Alteracao de Cliente" 
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divDeletarCliente">
+		        <ui:include src="/pages/protected/admin/atualizarCliente.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogDeletarCliente" id="deletarCliente" header="Exclusao de Cliente" 
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divDeletarCliente">
+		        <ui:include src="/pages/protected/admin/deletarCliente.xhtml" />
+		    </ui:insert>
+		</p:dialog>		
+		<p:dialog widgetVar="dialogIncluirCliente" id="incluirCliente" header="Inclusao de Cliente"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divIncluirCliente">
+		        <ui:include src="/pages/protected/admin/incluirCliente.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+	
+	</h:body>
+	</ui:define>
+	</ui:composition>
+</html>

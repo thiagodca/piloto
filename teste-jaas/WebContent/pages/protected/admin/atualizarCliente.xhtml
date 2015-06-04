@@ -5,22 +5,27 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:messages/>
- 
-    <h3>#{msgs.atualizarClienteHeader}: #{clienteBean.cliente.razaoSocial}</h3>
-    <h:inputHidden value="#{clienteBean.cliente.id}" />
-    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-        <h:outputLabel for="clienteCodigo" value="#{msgs.clienteCodigo}" />
-        <h:inputText id="clienteCodigo" value="#{clienteBean.cliente.codigo}" required="true" requiredMessage="#{msgs.codigoClienteRequired}" />
-
-        <h:outputLabel for="clienteRazaoSocial" value="#{msgs.clienteRazaoSocial}" />
-        <h:inputText id="clienteRazaoSocial" value="#{clienteBean.cliente.razaoSocial}" required="true" requiredMessage="#{msgs.razaoSocialClienteRequired}" />
-
-        <h:outputLabel for="clienteCpfCnpj" value="#{msgs.clienteCpfCnpj}" />
-        <h:inputText id="clienteCpfCnpj" value="#{clienteBean.cliente.cpfCnpj}" required="true" requiredMessage="#{msgs.cpfCnpjClienteRequired}" />
-    </h:panelGrid>
-    <h:panelGrid>
-        <p:commandButton update=":#{p:component('formClientes')}" actionListener="#{clienteBean.atualizarClienteFim}" value="#{msgs.atualizar}" />
-    </h:panelGrid>
-    <br/>
+	<h:form>
+		<p:messages/>
+	 
+	    <h3>#{msgs.atualizarClienteHeader}: #{clienteBean.cliente.razaoSocial}</h3>
+	    <h:inputHidden value="#{clienteBean.cliente.id}" />
+	
+	    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+	        <h:outputLabel for="clienteCodigo" value="#{msgs.clienteCodigo}" />
+	        <p:inputText id="clienteCodigo" value="#{clienteBean.cliente.codigo}" required="true" requiredMessage="#{msgs.codigoClienteRequired}" />
+	
+	        <h:outputLabel for="clienteRazaoSocial" value="#{msgs.clienteRazaoSocial}" />
+	        <p:inputText id="clienteRazaoSocial" value="#{clienteBean.cliente.razaoSocial}" required="true" requiredMessage="#{msgs.razaoSocialClienteRequired}" />
+	
+	        <h:outputLabel for="clienteCpfCnpj" value="#{msgs.clienteCpfCnpj}" />
+	        <p:inputText id="clienteCpfCnpj" value="#{clienteBean.cliente.cpfCnpj}" required="true" requiredMessage="#{msgs.cpfCnpjClienteRequired}" />
+	    </h:panelGrid>
+	
+	    <h:panelGrid>
+	        <p:commandButton update=":formClientes:tabelaClientes" actionListener="#{clienteBean.atualizarClienteFim}" value="#{msgs.atualizar}" />
+	    </h:panelGrid>
+	    
+   	</h:form>
+   
 </ui:composition>

@@ -1,48 +1,86 @@
-<ui:composition 
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/pages/templates/template.xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
 
 <ui:define name="content">
 
-<h:body>
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
+		
+		.ui-datatable td:nth-child(3) {
+    		padding: 5;
+    		text-align: center;
+		}
+		</style>
+	</h:head>
+	<h:body>
+	
+		<h:form id="formTiposDocumentos">
 
-	<h:form id="formTiposDocumentos">
- 
-        <p:messages />
-        <p:dataTable id="tabelaTiposDocumentos" value="#{tipoDocumentoBean.listaTiposDocumentos}" var="tipoDocumento" >
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.tipoDocumentoNome}
-                </f:facet>
- 
-                #{tipoDocumento.nomeTipo}
-            </p:column>
-            <p:column>
-                <f:facet name="header">
-                    #{msgs.tipoDocumentoDescricao}
-                </f:facet>
- 
-                #{tipoDocumento.descricao}
-            </p:column>
-            <p:column>
-                <p:panelGrid columns="2">
-                    <p:commandButton update=":#{p:component('formAlterarTipoDocumento')}" oncomplete="PF('dialogAlterarTipoDocumento').show()" immediate="true" title="#{msgs.atualizar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+			<p:panel id="panel" header="Tipos de Documentos">
+	 
+	        <p:messages />
+	        <p:dataTable id="tabelaTiposDocumentos" value="#{tipoDocumentoBean.listaTiposDocumentos}" var="tipoDocumento" 
+	        	emptyMessage="Nenhum tipo de documento encontrado.">
+	
+	            <p:column headerText="#{msgs.tipoDocumentoNome}">
+	                #{tipoDocumento.nomeTipo}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.tipoDocumentoDescricao}">
+	                #{tipoDocumento.descricao}
+	            </p:column>
+	
+	            <p:column width="80">
+                    <p:commandButton update="atualizarTipoDocumento" oncomplete="PF('dialogAtualizarTipoDocumento').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil" rendered="#{loginBean.usuarioAdmin}" >
                         <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
                     </p:commandButton>
-                    <p:commandButton update=":#{p:component('formDeletarTipoDocumento')}" oncomplete="PF('dialogDeletarTipoDocumento').show()" immediate="true" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
+                    <p:commandButton update="deletarTipoDocumento" oncomplete="PF('dialogDeletarTipoDocumento').show()" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
                         <f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
                     </p:commandButton>
                     <h:inputHidden value="#{tipoDocumento.id}" />
-                 </p:panelGrid>
-            </p:column>
-        </p:dataTable>
-        <p:commandButton update=":#{p:component('formIncluirTipoDocumento')}" oncomplete="PF('dialogIncluirTipoDocumento').show()" immediate="true" value="#{msgs.incluir}" icon="ui-icon-star"/>
-    </h:form>
-</h:body>
+	            </p:column>
+	        </p:dataTable>
+	        <br />
+	        <p:commandButton actionListener="#{tipoDocumentoBean.incluirTipoDocumentoFim}" oncomplete="PF('dialogIncluirTipoDocumento').show()" value="#{msgs.incluir}" icon="ui-icon-plus" rendered="#{loginBean.usuarioAdmin}" >
+				<f:setPropertyActionListener target="#{tipoDocumentoBean.tipoDocumento}" value="#{tipoDocumento}" />
+	        </p:commandButton> 
+	        
+	        </p:panel>
+	        
+	    </h:form>
+
+		<p:dialog widgetVar="dialogIncluirTipoDocumento" id="incluirTipoDocumento" header="Inclusao de Tipo de Documento"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divIncluirTipoDocumento">
+		        <ui:include src="/pages/protected/admin/incluirTipoDocumento.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogAtualizarTipoDocumento" id="atualizarTipoDocumento" header="Inclusao de Tipo de Documento"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divAtualizarTipoDocumento">
+		        <ui:include src="/pages/protected/admin/atualizarTipoDocumento.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogDeletarTipoDocumento" id="deletarTipoDocumento" header="Exclusao de Tipo de Documento"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)">
+		    <ui:insert name="divDeletarTipoDocumento">
+		        <ui:include src="/pages/protected/admin/deletarTipoDocumento.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+
+	</h:body>
 
 </ui:define>
 </ui:composition>
+</html>

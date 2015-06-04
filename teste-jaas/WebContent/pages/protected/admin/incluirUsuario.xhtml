@@ -5,24 +5,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-    <h:messages/>
+	<h:form>
+	    <p:messages/>
 
-    <h3>${msgs.incluirUsuarioHeader}</h3>
-    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-        <h:outputLabel for="nomeUsuario" value="#{msgs.usuarioNome}" />
-        <h:inputText id="nomeUsuario" value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="#{msgs.nomeUsuarioRequired}" />
-
-        <h:outputLabel for="loginUsuario" value="#{msgs.usuarioLogin}" />
-        <h:inputText id="loginUsuario" value="#{usuarioBean.usuario.login}" required="true" requiredMessage="#{msgs.loginUsuarioRequired}" />
-
-        <h:outputLabel for="senhaUsuario" value="#{msgs.usuarioSenha}" />
-        <h:inputSecret id="senhaUsuario" value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="#{msgs.senhaUsuarioRequired}" />
-        
-        <h:outputLabel for="senhaConfirmacao" value="#{msgs.usuarioSenhaConfirmacao}" />
-        <h:inputSecret id="senhaConfirmacao" value="#{usuarioBean.senhaConfirmacao}" required="true" requiredMessage="#{msgs.senhaConfirmacaoUsuarioRequired}" />
-    </h:panelGrid>
-    <h:panelGrid>
-        <p:commandButton update=":#{p:component('formUsuarios')}" actionListener="#{usuarioBean.incluirUsuarioFim}" value="#{msgs.incluir}" />
-    </h:panelGrid>
-    <br/>
+	    <h3>${msgs.incluirUsuarioHeader}</h3>
+	    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+	        <h:outputLabel for="nomeUsuario" value="#{msgs.usuarioNome}" />
+	        <p:inputText id="nomeUsuario" value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="#{msgs.nomeUsuarioRequired}" />
+	
+	        <h:outputLabel for="loginUsuario" value="#{msgs.usuarioLogin}" />
+	        <p:inputText id="loginUsuario" value="#{usuarioBean.usuario.login}" required="true" requiredMessage="#{msgs.loginUsuarioRequired}" />
+	
+	        <h:outputLabel for="senhaUsuario" value="#{msgs.usuarioSenha}" />
+	        <h:inputSecret id="senhaUsuario" value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="#{msgs.senhaUsuarioRequired}" />
+	        
+	        <h:outputLabel for="senhaConfirmacao" value="#{msgs.usuarioSenhaConfirmacao}" />
+	        <h:inputSecret id="senhaConfirmacao" value="#{usuarioBean.senhaConfirmacao}" required="true" requiredMessage="#{msgs.senhaConfirmacaoUsuarioRequired}" />
+	    </h:panelGrid>
+	    <h:panelGrid>
+	        <p:commandButton update=":formUsuarios:tabelaUsuarios" actionListener="#{usuarioBean.incluirUsuarioFim}" value="#{msgs.incluir}" />
+	    </h:panelGrid>
+	
+	</h:form>
 </ui:composition>

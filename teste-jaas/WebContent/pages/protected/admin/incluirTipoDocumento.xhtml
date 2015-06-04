@@ -5,18 +5,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-    <h:messages/>
+	<h:form>
+	    <p:messages/>
 
-    <h3>${msgs.incluirTipoDocumentoHeader}</h3>
-    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-        <h:outputLabel for="nomeTipoDocumento" value="#{msgs.tipoDocumentoNome}" />
-        <h:inputText id="nomeTipoDocumento" value="#{tipoDocumentoBean.tipoDocumento.nomeTipo}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
-
-        <h:outputLabel for="descricaoTipoDocumento" value="#{msgs.tipoDocumentoDescricao}" />
-        <h:inputText id="descricaoTipoDocumento" value="#{tipoDocumentoBean.tipoDocumento.descricao}" required="true" requiredMessage="#{msgs.descricaoTipoDocumentoRequired}" />
-    </h:panelGrid>
-    <h:panelGrid columns="2">
-        <p:commandButton update=":#{p:component('formTiposDocumentos')}" actionListener="#{tipoDocumentoBean.incluirTipoDocumentoFim}" value="#{msgs.incluir}" />
-    </h:panelGrid>
-    <br/>
+	    <h3>${msgs.incluirTipoDocumentoHeader}</h3>
+	    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+	        <h:outputLabel for="nomeTipoDocumento" value="#{msgs.tipoDocumentoNome}" />
+	        <p:inputText id="nomeTipoDocumento" value="#{tipoDocumentoBean.tipoDocumento.nomeTipo}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+	
+	        <h:outputLabel for="descricaoTipoDocumento" value="#{msgs.tipoDocumentoDescricao}" />
+	        <p:inputText id="descricaoTipoDocumento" value="#{tipoDocumentoBean.tipoDocumento.descricao}" required="true" requiredMessage="#{msgs.descricaoTipoDocumentoRequired}" />
+	    </h:panelGrid>
+	    <h:panelGrid>
+	        <p:commandButton update=":formTiposDocumentos:tabelaTiposDocumentos" actionListener="#{tipoDocumentoBean.incluirTipoDocumentoFim}" value="#{msgs.incluir}" />
+	    </h:panelGrid>
+	
+	</h:form>
 </ui:composition>

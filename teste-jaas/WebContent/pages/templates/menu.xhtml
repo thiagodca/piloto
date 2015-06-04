@@ -11,12 +11,14 @@
 				<p:menu autoSubmenuDisplay="true" style="width:213px;height:483px;border:none;font-size:small;padding:0px;"
 					ajax="false" type="sliding" backLabel="#{msg['menu.back']}">
 					<p:submenu label="Documentos" icon="ui-icon ui-icon-refresh">
-						<p:menuitem value="Documentos"
+						<p:menuitem value="Documentos por Cliente"
+							url="/pages/public/listarDocumentos.xhtml" />
+						<p:menuitem value="Pesquisa Avancada"
 							url="/pages/public/listarDocumentos.xhtml" />
 						<p:menuitem value="Tipos de Documentos" 
-							url="/pages/protected/admin/listarTiposDocumentos.xhtml" />
+							url="/pages/protected/admin/listarTiposDocumentos.xhtml" rendered="#{loginBean.usuarioAdmin}" />
 					</p:submenu>
-					<p:submenu label="Administracao" icon="ui-icon ui-icon-refresh">
+					<p:submenu label="Administracao" icon="ui-icon ui-icon-refresh" rendered="#{loginBean.usuarioAdmin}">
 						<p:menuitem value="Clientes"
 							url="/pages/protected/admin/listarClientes.xhtml" />
 						<p:menuitem value="Usuarios" 

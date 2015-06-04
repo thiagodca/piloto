@@ -5,19 +5,21 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:messages/>
+	<h:form>
+		<p:messages/>
  
-	<h3>#{msgs.atualizarTipoDocumentoHeader}: #{tipoDocumentoBean.tipoDocumento.nomeTipo}</h3>
-	<h:inputHidden value="#{tipoDocumentoBean.tipoDocumento.id}" />
-	<h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-	    <h:outputLabel for="tipoDocumentoTitulo" value="#{msgs.tipoDocumentoNome}" />
-	    <h:inputText id="tipoDocumentoTitulo" value="#{tipoDocumentoBean.tipoDocumento.nomeTipo}" required="true" requiredMessage="#{msgs.nomeTipoDocumentoRequired}" />
-	
-	    <h:outputLabel for="tipoDocumentoDescricao" value="#{msgs.tipoDocumentoDescricao}" />
-	    <h:inputText id="tipoDocumentoDescricao" value="#{tipoDocumentoBean.tipoDocumento.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
-	</h:panelGrid>
-	<h:panelGrid columns="2">
-	    <p:commandButton update=":#{p:component('formTiposDocumentos')}" actionListener="#{tipoDocumentoBean.atualizarTipoDocumentoFim}" value="#{msgs.atualizar}" />
-	</h:panelGrid>
-	<br/>
+		<h3>#{msgs.atualizarTipoDocumentoHeader}: #{tipoDocumentoBean.tipoDocumento.nomeTipo}</h3>
+		<h:inputHidden value="#{tipoDocumentoBean.tipoDocumento.id}" />
+		<h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+		    <h:outputLabel for="tipoDocumentoTitulo" value="#{msgs.tipoDocumentoNome}" />
+		    <p:inputText id="tipoDocumentoTitulo" value="#{tipoDocumentoBean.tipoDocumento.nomeTipo}" required="true" requiredMessage="#{msgs.nomeTipoDocumentoRequired}" />
+		
+		    <h:outputLabel for="tipoDocumentoDescricao" value="#{msgs.tipoDocumentoDescricao}" />
+		    <p:inputText id="tipoDocumentoDescricao" value="#{tipoDocumentoBean.tipoDocumento.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+		    <p:commandButton update=":formTiposDocumentos:tabelaTiposDocumentos" actionListener="#{tipoDocumentoBean.atualizarTipoDocumentoFim}" value="#{msgs.atualizar}" />
+		</h:panelGrid>
+		
+	</h:form>
 </ui:composition>

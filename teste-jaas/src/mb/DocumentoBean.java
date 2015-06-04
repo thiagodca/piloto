@@ -22,6 +22,8 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
+
 import util.UtilData;
 import facade.ArquivoAnexoFacade;
 import facade.ArquivoUploadFacade;
@@ -34,8 +36,6 @@ import facade.UsuarioFacade;
 @ViewScoped
 public class DocumentoBean implements Serializable{
 
-    private static final String DELETAR_DOCUMENTO 	= "deletarDocumento";
-    private static final String ATUALIZAR_DOCUMENTO = "atualizarDocumento";
     private static final String LISTAR_DOCUMENTOS 	= "listarDocumentos";
         
 	@EJB
@@ -88,15 +88,6 @@ public class DocumentoBean implements Serializable{
     }
     
     /**
-     * Direciona para a pagina que edita um documento
-     * @return
-     */
-    public String atualizarDocumentoInicio(){
-    	System.out.println(">> atualizarDocumentoInicio()");
-    	return ATUALIZAR_DOCUMENTO;
-    }
- 
-    /**
      * Persiste as alteracoes do documento
      * @return
      */
@@ -122,16 +113,7 @@ public class DocumentoBean implements Serializable{
         sendInfoMessageToUser("Documento atualizado com sucesso.");
 
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('dialogAlterar').hide();");
-    }
- 
-    /**
-     * Direciona para a pagina que confirma a exclusao
-     * @return
-     */
-    public String deletarDocumentoInicio(){
-    	System.out.println(">> deletarDocumentoInicio()");
-        return DELETAR_DOCUMENTO;
+        context.execute("PF('dialogAtualizarDocumento').hide();");
     }
  
     /**
@@ -157,7 +139,7 @@ public class DocumentoBean implements Serializable{
  
         //return LISTAR_DOCUMENTOS;
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('dialogDeletar').hide();");
+        context.execute("PF('dialogDeletarDocumento').hide();");
     }
  
     /**
@@ -195,7 +177,7 @@ public class DocumentoBean implements Serializable{
  
         //return LISTAR_DOCUMENTOS;
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('dialogIncluir').hide();");
+        context.execute("PF('dialogIncluirDocumento').hide();");
     }
     
     public void incluirArquivoAnexoInicio(){
@@ -226,7 +208,7 @@ public class DocumentoBean implements Serializable{
 
         	String nomeArquivo = au.getNome();
 
-        	arquivoAnexo = getArquivoAnexo();
+        	arquivoAnexo = new ArquivoAnexo();
         	
         	arquivoAnexo.setDocumento(umDocumento);
             arquivoAnexo.setNome(nomeArquivo);
@@ -242,22 +224,21 @@ public class DocumentoBean implements Serializable{
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
  
-            //return CONTINUAR_NA_PAGINA;
         } catch (IOException e) {
             sendErrorMessageToUser("Erro ao carregar arquivo para o servidor. " +e.getMessage());
- 
-            //return CONTINUAR_NA_PAGINA;
         }       
  
         sendInfoMessageToUser("Arquivos anexados com sucesso!");
- 
-        //return INCLUIR_ARQUIVOANEXO;
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('dialogAnexar').hide();");
+
+        //RequestContext context = RequestContext.getCurrentInstance();
+        //context.execute("PF('dialogAnexarDocumento').hide();");
     }
 
     public List<ArquivoAnexo> getListaArquivosAnexos(){
     	System.out.println(">> getListaArquivosAnexos()");
+    	if(documento!=null){
+    		listaArquivosAnexos = arquivoAnexoFacade.listarAnexosPorDocumento(documento.getId());
+    	}
     	return listaArquivosAnexos;
 	}
     

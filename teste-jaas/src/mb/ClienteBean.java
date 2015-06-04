@@ -42,7 +42,7 @@ public class ClienteBean {
 	public List<Cliente> getListaClientes(){
 		return clienteFacade.listarTodos();
 	}
-
+	
     public void atualizarClienteFim(){
         try {
         	Cliente umCliente = clienteFacade.buscarClientePorId(cliente.getId());

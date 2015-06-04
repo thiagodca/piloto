@@ -7,8 +7,22 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
+	<h:head>
+		<style>
+		.header {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif;
+			font-size: small;
+			position: absolute;
+    		bottom: 0;
+    		right: 0;
+		}
+		</style>
+	</h:head>
+	<h:body>
 		<h:form> 
-			<h3>Bem-vindo: #{loginBean.usuario.login} || <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" /> </h3>
- 		</h:form>
-
+			<div align="right" class="header">
+				Bem-vindo, #{loginBean.usuario.login}! | <h:commandLink action="#{loginBean.logOut()}" value="#{msgs.logout}" />
+			</div>
+		</h:form>
+	</h:body>
 </ui:composition>

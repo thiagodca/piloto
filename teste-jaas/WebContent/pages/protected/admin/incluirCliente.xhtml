@@ -5,21 +5,22 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-    <h:messages/>
-
-    <h3>${msgs.incluirClienteHeader}</h3>
-    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
-        <h:outputLabel for="codigoCliente" value="#{msgs.clienteCodigo}" />
-        <h:inputText id="codigoCliente" value="#{clienteBean.cliente.codigo}" required="true" requiredMessage="#{msgs.codigoClienteRequired}" />
-
-        <h:outputLabel for="razaoSocialCliente" value="#{msgs.clienteRazaoSocial}" />
-        <h:inputText id="razaoSocialCliente" value="#{clienteBean.cliente.razaoSocial}" required="true" requiredMessage="#{msgs.razaoSocialClienteRequired}" />
-
-        <h:outputLabel for="cpfCnpjCliente" value="#{msgs.clienteCpfCnpj}" />
-        <h:inputText id="cpfCnpjCliente" value="#{clienteBean.cliente.cpfCnpj}" required="true" requiredMessage="#{msgs.cpfCnpjClienteRequired}" />
-    </h:panelGrid>
-    <h:panelGrid>
-        <p:commandButton update=":#{p:component('formClientes')}" actionListener="#{clienteBean.incluirClienteFim}" value="#{msgs.incluir}" />
-    </h:panelGrid>
-    <br/>
+	<h:form>
+	    <p:messages/>
+	
+	    <h3>${msgs.incluirClienteHeader}</h3>
+	    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+	        <h:outputLabel for="codigoCliente" value="#{msgs.clienteCodigo}" />
+	        <h:inputText id="codigoCliente" value="#{clienteBean.cliente.codigo}" required="true" requiredMessage="#{msgs.codigoClienteRequired}" />
+	
+	        <h:outputLabel for="razaoSocialCliente" value="#{msgs.clienteRazaoSocial}" />
+	        <h:inputText id="razaoSocialCliente" value="#{clienteBean.cliente.razaoSocial}" required="true" requiredMessage="#{msgs.razaoSocialClienteRequired}" />
+	
+	        <h:outputLabel for="cpfCnpjCliente" value="#{msgs.clienteCpfCnpj}" />
+	        <h:inputText id="cpfCnpjCliente" value="#{clienteBean.cliente.cpfCnpj}" required="true" requiredMessage="#{msgs.cpfCnpjClienteRequired}" />
+	    </h:panelGrid>
+	    <h:panelGrid>
+	        <p:commandButton update=":formClientes:tabelaClientes" actionListener="#{clienteBean.incluirClienteFim}" value="#{msgs.incluir}" />
+	    </h:panelGrid>
+    </h:form>
 </ui:composition>
