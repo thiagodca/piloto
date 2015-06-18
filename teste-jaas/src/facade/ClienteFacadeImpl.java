@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import validation.ValidatorFactory;
 import model.Cliente;
 import dao.ClienteDAO;
 
@@ -15,7 +16,7 @@ public class ClienteFacadeImpl implements ClienteFacade{
 
 	@Override
 	public List<Cliente> listarTodos() {
-		List<Cliente> result = clienteDAO.findAll();
+		List<Cliente> result = clienteDAO.listarTodos();
 		return result;
 	}
 	
@@ -30,7 +31,10 @@ public class ClienteFacadeImpl implements ClienteFacade{
 	}
 
 	@Override
-	public void salvar(Cliente cliente) {
+	public void salvar(Cliente cliente) throws Exception {
+		
+		validar(cliente);
+		
 		clienteDAO.save(cliente);
 	}
 
@@ -43,4 +47,16 @@ public class ClienteFacadeImpl implements ClienteFacade{
 	public Cliente buscarClientePorCodigo(String codigoCliente){
 		return clienteDAO.buscar(codigoCliente);
 	}
+
+	@Override
+	public Cliente buscarClientePorCPFCNPJ(String cpfCnpj) {
+		return clienteDAO.buscarPorCPFCNPJ(cpfCnpj);
+	}
+	
+	private void validar(Cliente cliente) throws Exception{
+		
+		ValidatorFactory.getInstance().getValidator(cliente).validate();
+		
+	}
+	
 }

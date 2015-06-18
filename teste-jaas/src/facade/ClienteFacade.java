@@ -9,7 +9,7 @@ import model.Cliente;
 @Local
 public interface ClienteFacade {
 	 
-    public abstract void salvar(Cliente cliente);
+    public abstract void salvar(Cliente cliente) throws Exception;
  
     public abstract Cliente atualizar(Cliente cliente);
  
@@ -19,5 +19,8 @@ public interface ClienteFacade {
 	
 	public abstract Cliente buscarClientePorCodigo(String codigoCliente);
 	
+	public abstract Cliente buscarClientePorCPFCNPJ(String cpfCnpj);
+	
     public abstract List<Cliente> listarTodos();
+    
 }
