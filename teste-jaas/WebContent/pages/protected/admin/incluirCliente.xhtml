@@ -20,7 +20,7 @@
 	        <h:inputText id="cpfCnpjCliente" value="#{clienteBean.cliente.cpfCnpj}" required="true" requiredMessage="#{msgs.cpfCnpjClienteRequired}" />
 	    </h:panelGrid>
 	    <h:panelGrid>
-	        <p:commandButton update=":formClientes:tabelaClientes" actionListener="#{clienteBean.incluirClienteFim}" value="#{msgs.incluir}" />
+	        <p:commandButton update=":formClientes" actionListener="#{clienteBean.incluirClienteFim}" value="#{msgs.incluir}" />
 	    </h:panelGrid>
     </h:form>
 </ui:composition>

@@ -11,7 +11,7 @@
 	    <h3>#{msgs.deletarClienteHeader}: #{clienteBean.cliente.razaoSocial}?</h3>
 	    <h:inputHidden value="#{clienteBean.cliente.id}" />
 	    <h:panelGrid>
-	        <p:commandButton update=":formClientes:tabelaClientes" actionListener="#{clienteBean.deletarClienteFim}" value="#{msgs.deletar}" />
+	        <p:commandButton update=":formClientes" actionListener="#{clienteBean.deletarClienteFim}" value="#{msgs.deletar}" />
 	    </h:panelGrid>
 	    
 	</h:form>
