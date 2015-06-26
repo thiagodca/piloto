@@ -82,7 +82,7 @@ public class ArquivoAnexoBean {
         	System.out.println("Uploaded File Name Is :: "+arquivo.getFileName()+" :: Uploaded File Size :: "+arquivo.getSize());
         	
         	ArquivoUpload au = new ArquivoUpload(arquivo);
-        	au.setCodigoCliente(umDocumento.getCliente().getCodigo());
+        	au.setPasta(umDocumento.getCliente().getCpfCnpj());
 
         	String nomeArquivo = au.getNome();
 

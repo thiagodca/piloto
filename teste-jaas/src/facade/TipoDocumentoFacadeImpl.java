@@ -1,4 +1,5 @@
 package facade;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -20,8 +21,25 @@ public class TipoDocumentoFacadeImpl implements TipoDocumentoFacade{
 	}
 	
 	@Override
+	public List<String> listarTodosString() {
+		List<TipoDocumento> tipos = tipoDocumentoDAO.findAll();
+		
+		List<String> result = new ArrayList<String>();
+		for(TipoDocumento tp : tipos){
+			result.add(tp.getNomeTipo() + ";" + tp.getCodigo());
+		}
+		
+		return result;
+	}
+
+	@Override
 	public TipoDocumento buscar(long id){
 		return tipoDocumentoDAO.find(id);
+	}
+	
+	@Override
+	public TipoDocumento buscarPorCodigo(String codigo){
+		return tipoDocumentoDAO.buscar(codigo);
 	}
 	
 	@Override

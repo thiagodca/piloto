@@ -17,5 +17,9 @@ public interface TipoDocumentoFacade {
  
     public abstract TipoDocumento buscar(long entityID);
  
+    public abstract TipoDocumento buscarPorCodigo(String codigo);
+
     public abstract List<TipoDocumento> listarTodos();
+    
+    public abstract List<String> listarTodosString();
 }

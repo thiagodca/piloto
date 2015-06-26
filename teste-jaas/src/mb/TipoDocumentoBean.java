@@ -46,7 +46,7 @@ public class TipoDocumentoBean {
  
         sendInfoMessageToUser("Operation Complete: Update");
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('dialogAlterarTipoDocumento').hide();");
+        context.execute("PF('dialogAtualizarTipoDocumento').hide();");
     }
  
     public void deletarTipoDocumentoFim(){

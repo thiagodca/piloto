@@ -24,7 +24,13 @@ public abstract class GenericDAO<T> {
     public void save(T entity) {
         em.persist(entity);
     }
- 
+
+    public T saveAndReturn(T entity) {
+        em.persist(entity);
+        em.flush();
+        return entity;
+    }
+
     public void delete(Object id, Class<T> classe) {
         T entityToBeRemoved = em.getReference(classe, id);
  

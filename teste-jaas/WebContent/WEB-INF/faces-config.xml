@@ -11,6 +11,28 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>cargaDeArquivos</from-outcome>
+            <to-view-id>/pages/protected/users/cargaDeArquivos.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>cargaAutomatica</from-outcome>
+            <to-view-id>/pages/protected/users/cargaAutomatica.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>listarCargasArquivo</from-outcome>
+            <to-view-id>/pages/public/listarCargasArquivo.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
     <navigation-rule>
         <navigation-case>
             <from-outcome>listarDocumentos</from-outcome>

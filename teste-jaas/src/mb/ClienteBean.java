@@ -87,8 +87,8 @@ public class ClienteBean {
         	cliente.setDataInclusao(UtilData.getDataAtual());
         	
             clienteFacade.salvar(cliente);
-        } catch (EJBException e) {
-            sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
+        } catch (Exception e) {
+            sendErrorMessageToUser(e.getMessage());
         }       
  
         sendInfoMessageToUser("Operation Complete: Create");

@@ -22,7 +22,7 @@ public class ArquivoUpload {
    
 	}
 	
-	private String codigoCliente;
+	private String pasta;
 	
 	private UploadedFile arquivo;
 
@@ -38,11 +38,11 @@ public class ArquivoUpload {
 		return arquivo;
 	}
 
-	public String getCodigoCliente() {
-		return codigoCliente;
+	public String getPasta() {
+		return pasta;
 	}
 
-	public void setCodigoCliente(String codigoCliente) {
-		this.codigoCliente = codigoCliente;
-	}	
+	public void setPasta(String pasta) {
+		this.pasta = pasta;
+	}
 }

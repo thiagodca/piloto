@@ -49,6 +49,9 @@ public class Documento implements Serializable{
 	@OneToOne
 	private Usuario usuarioAlteracao;
 	
+	@ManyToOne 
+	private CargaArquivo cargaArquivo;
+	
 	public long getId() {
 		return id;
 	}
@@ -114,6 +117,12 @@ public class Documento implements Serializable{
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public CargaArquivo getCargaArquivo() {
+		return cargaArquivo;
+	}
+	public void setCargaArquivo(CargaArquivo cargaArquivo) {
+		this.cargaArquivo = cargaArquivo;
 	}
 	 
 }

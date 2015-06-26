@@ -1,4 +1,5 @@
 package facade;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +7,7 @@ import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import model.ArquivoCarga;
 import model.ArquivoUpload;
 import model.Parametro;
 import model.TipoParametro;
@@ -21,14 +23,21 @@ public class ArquivoUploadFacadeImpl implements ArquivoUploadFacade{
 	private ParametroDAO parametroDAO;
 
 	@Override
+    public void upload(ArquivoCarga arquivoCarga) throws IOException {
+		ArquivoUpload au = new ArquivoUpload(arquivoCarga.getArquivo());
+		au.setPasta(arquivoCarga.getPasta());
+		this.upload(au);
+	}
+	
+	@Override
     public void upload(ArquivoUpload arquivoUpload) throws IOException {
     	
     	UploadedFile file = arquivoUpload.getArquivo();
     	String fileName = arquivoUpload.getNome();
     	String diretorio = buscarDiretorio();
-    	String codigoCliente = arquivoUpload.getCodigoCliente();
+    	String pasta = arquivoUpload.getPasta();
     	
-    	String path = diretorio + codigoCliente + "/" + fileName;
+    	String path = diretorio + pasta + "/" + fileName;
     	    	
     	InputStream inputStream = file.getInputstream();          
     	FileOutputStream outputStream = new FileOutputStream(path);
@@ -46,7 +55,23 @@ public class ArquivoUploadFacadeImpl implements ArquivoUploadFacade{
     	outputStream.close();  
     	inputStream.close();
     	
-	}  
+	}
+	
+	@Override
+	public void moveArquivo(ArquivoCarga arquivoCarga) throws Exception {
+
+		String fileName = arquivoCarga.getNome();
+		
+		String pathFrom = buscarDiretorio() + arquivoCarga.getPasta() + "/" + fileName;
+		String pathTo 	= buscarDiretorio() + arquivoCarga.getCpfCnpjCliente() + "/" + fileName;
+		
+		File aFile = new File(pathFrom);
+		 
+		if(!aFile.renameTo(new File(pathTo))){
+			 throw new Exception("Erro ao mover arquivo " + fileName);
+		}
+				 
+	}
 
 	private String buscarDiretorio(){
 		
