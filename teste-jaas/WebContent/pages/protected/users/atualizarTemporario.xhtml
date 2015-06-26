@@ -1,0 +1,30 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<p:messages/>
+
+		<h3>Atualizar #{cargaArquivoBean.arquivoTempErro.nome}</h3>
+	      
+		<h:inputHidden value="#{cargaArquivoBean.arquivoTempErro.id}" />
+		<h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
+			<h:outputLabel value="Codigo Documento" />
+			<p:inputText id="codigoDocumento" value="#{cargaArquivoBean.arquivoTempErro.codigoTipo}" required="true" />
+
+			<h:outputLabel for="cpfCnpj" value="CPF/CNPJ" />
+			<p:inputText id="cpfCnpj" value="#{cargaArquivoBean.arquivoTempErro.cpfCnpjCliente}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+			
+			<h:outputLabel for="descricao" value="#{msgs.documentoDescricao}" />
+			<p:inputText id="descricao" value="#{cargaArquivoBean.arquivoTempErro.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+		</h:panelGrid>
+		<h:panelGrid>
+			<p:commandButton update=":formCargaArquivo" actionListener="#{cargaArquivoBean.atualizarArqTemporarioFim}" value="#{msgs.atualizar}" />
+		</h:panelGrid>
+	
+	</h:form>
+</ui:composition>
+        

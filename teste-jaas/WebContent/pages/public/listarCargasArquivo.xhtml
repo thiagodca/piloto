@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
+<ui:define name="content">
+
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
+		
+		</style>
+	</h:head>
+	<h:body>
+
+		<h:form id="formCargas">
+	 		
+	 		<p:panel id="panel" header="Cargas">
+	        
+	        <p:dataTable id="tabelaCargas" value="#{pesquisaCargaBean.listaCargas}" var="carga"
+	        	 emptyMessage="Nenhum documento encontrado." >
+	
+	            <p:column headerText="#{msgs.documentoTipoDocumento}">
+	                #{carga.id}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.documentoTitulo}">
+	                #{carga.descricao}
+	            </p:column>
+	
+	            <p:column headerText="#{msgs.documentoDescricao}">
+	                #{carga.situacao}
+	            </p:column>
+	            
+	            <p:column>
+					<p:button value="Abrir" outcome="cargaAutomatica">
+    					<f:param name="cargaArquivoId" value="#{carga.id}" />
+					</p:button>
+                </p:column>
+
+	        </p:dataTable>
+	        <br />
+	        
+	    </p:panel>    
+	    </h:form>
+		
+	</h:body>
+
+</ui:define>
+</ui:composition>
+</html>

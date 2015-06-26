@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
+<ui:define name="content">
+
+	<h:head>
+		<style>
+		.ui-panel {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+			border: hidden !important;
+		}
+			
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: x-small !important;
+		}
+		
+		.ui-datatable td {
+			border-color: white !important;
+		}
+
+		.ui-datatable th {
+			border-color: white !important;
+		}
+		
+		.ui-datatable td:nth-child(5) {
+    		padding: 5;
+    		text-align: center;
+		}
+		
+		.ui-widget-content .tabview-arquivos {
+			border: hidden !important;
+		}
+		
+		.ui-widget-content .tabview-arquivos ul {
+			border-bottom-left-radius: 0px; 
+			border-bottom-right-radius: 0px;
+			border-bottom-width: 0px;
+		}
+		
+		.ui-tabs .ui-tabs-panel  {
+			border-width: 1px;
+			border-top-width: 0px;
+			padding: 0.5em;
+		}
+		
+		.ui-tabs .ui-widget-content .ui-state-default li {
+			border: hidden !important;
+		}
+		
+		.ui-tabs .ui-widget-header .ui-state-default li {
+			border: hidden !important;
+		}
+		
+		</style>
+		
+		<script>
+			function js_upload(fileupload) {
+			    if (fileupload.files.length == 0) {
+			        upload();
+			    }
+			}    
+		</script>
+		
+	</h:head>
+	<h:body>
+
+		<h:form id="formCargaArquivo">
+	 		
+	 		<f:metadata>
+    			<f:viewParam name="cargaArquivoId" value="#{cargaArquivoBean.cargaArquivoId}" />
+    			<f:event type="preRenderView" listener="#{cargaArquivoBean.abrir}"/>
+			</f:metadata>
+	 		
+	 		<p:panel id="panel" header="Carga de Documentos">
+	        
+		        <p:messages />
+		        
+		        <h:panelGrid columns="3" cellpadding="5"  rendered="#{!cargaArquivoBean.cargaIniciada}">
+	
+		    		<p:fileUpload value="#{cargaArquivoBean.arquivo}" mode="advanced" label="Selecionar" 
+		    			cancelLabel="Cancelar" uploadLabel="Enviar" multiple="true"
+		    			onstart="inicio()"
+		    			oncomplete="js_upload(this);"
+	                    fileUploadListener="#{cargaArquivoBean.carregaDocumentos}"/>        
+		        	        	
+		        </h:panelGrid>
+		        
+		        <p:remoteCommand name="inicio" action="#{cargaArquivoBean.inicio}"/>		        
+		        <p:remoteCommand name="upload" action="#{cargaArquivoBean.upload}" update="@form"/>
+ 	
+				<h:panelGrid id="dadosCarga" columns="6" cellpadding="5" rendered="#{cargaArquivoBean.cargaIniciada}">
+					            
+		            <p:outputLabel value="Descricao" />
+		            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.descricao}"/>
+					<p:outputLabel value=""/>
+	
+		            <p:outputLabel value="Tamanho do lote" />
+		            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.tamanho}"/>
+					<p:outputLabel value=""/>
+	
+		            <p:outputLabel value="Numero do lote" />
+		            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.id}"/>
+					<p:outputLabel value=""/>
+					
+					<p:outputLabel value="Usuario" />
+		            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.usuarioAlteracao.login}"/>
+					<p:outputLabel value=""/>
+					
+		            <p:outputLabel value="Data da Carga" />
+		            <h:outputLabel value="#{cargaArquivoBean.cargaArquivo.dataAlteracao.time}">
+		         		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+		      		</h:outputLabel>
+					<p:outputLabel value=""/>
+		            
+		            <p:outputLabel value="Situacao" />
+		            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.situacao}"/>
+					<p:outputLabel value=""/>
+		            
+		        </h:panelGrid>
+		    	
+		    	<p:tabView styleClass="tabview-arquivos" rendered="#{fn:length(cargaArquivoBean.listaArquivosTemporarios) > 0 || fn:length(cargaArquivoBean.listaArquivosTemporariosErro) > 0}">
+	        		<p:tab styleClass="tab-arquivos" title="Arquivos Identificados">
+				        <p:dataTable id="tabelaArquivos" value="#{cargaArquivoBean.listaArquivosTemporarios}" var="arqTemp"
+				        	 emptyMessage="Nenhum documento encontrado." >
+				
+					            <p:column headerText="Nome">
+					                #{arqTemp.nome}
+					            </p:column>
+					            <p:column headerText="Tipo">
+					                #{arqTemp.codigoTipo}
+					            </p:column>
+					            <p:column headerText="CPF/CNPJ">
+					                #{arqTemp.cpfCnpjCliente}
+					            </p:column>
+					            <p:column headerText="Descricao">
+					                #{arqTemp.descricao}
+					            </p:column>
+							
+						</p:dataTable>
+					</p:tab>
+			    	
+			    	<p:tab title="Arquivos Nao Identificados">
+				        <p:dataTable id="tabelaArquivosErro" value="#{cargaArquivoBean.listaArquivosTemporariosErro}" var="arqTempErro"
+				        	 emptyMessage="Nenhum documento encontrado.">
+				
+					            <p:column headerText="Nome">
+					                #{arqTempErro.nome}
+					            </p:column>
+					            <p:column headerText="Tipo">
+					                #{arqTempErro.codigoTipo}
+					            </p:column>
+					            <p:column headerText="CPF/CNPJ">
+					                #{arqTempErro.cpfCnpjCliente}
+					            </p:column>
+					            <p:column headerText="Erro">
+					                #{arqTempErro.msgErro}
+					            </p:column>
+					            <p:column width="100">
+				                    <p:commandButton update="atualizarTemporario" oncomplete="PF('dialogAtualizarTemporario').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil">
+				                        <f:setPropertyActionListener target="#{cargaArquivoBean.arquivoTempErro}" value="#{arqTempErro}" />
+				                    </p:commandButton>
+				                    <p:commandButton update="deletarTemporario" oncomplete="PF('dialogDeletarTemporario').show()" title="#{msgs.deletar}" icon="ui-icon-trash">
+				                        <f:setPropertyActionListener target="#{cargaArquivoBean.arquivoTempErro}" value="#{arqTempErro}" />
+				                    </p:commandButton>
+								</p:column>
+								
+						</p:dataTable>
+						<br />
+						
+					</p:tab>
+				</p:tabView>		    	
+		    	
+		    	<br />
+		    	
+		    	<p:commandButton update="@form" action="#{cargaArquivoBean.gravaDocumentos}" icon="ui-icon-plus" value="Finalizar"
+		    		 rendered="#{cargaArquivoBean.cargaIniciada}" />
+
+	    	</p:panel>	    	
+	    </h:form>
+	    	  
+		<p:dialog widgetVar="dialogAtualizarTemporario" id="atualizarTemporario" header="Alteracao de Arquivo"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)" closeOnEscape="true">
+		    <ui:insert name="divAtualizarTemporario">
+		        <ui:include src="/pages/protected/users/atualizarTemporario.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+		<p:dialog widgetVar="dialogDeletarTemporario" id="deletarTemporario" header="Exclusao de Arquivo"
+			modal="true" resizable="false" draggable="false" appendTo="@(body)" closeOnEscape="true">
+		    <ui:insert name="divDeletarTemporario">
+		        <ui:include src="/pages/protected/users/deletarTemporario.xhtml" />
+		    </ui:insert>
+		</p:dialog>
+	    	    	
+	</h:body>
+</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+<h:head />
+<h:body>
+	<h:form class="loginPanelStyle" id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false">
+
+		<p:growl id="msgs" showDetail="true" sticky="false" />                        
+		<p:panelGrid columns="2">
+		
+			<f:facet name="header">
+			    Login
+			</f:facet>
+			
+			<h:outputText value="Usuario : "></h:outputText>
+			<p:inputText id="j_username" name="j_username" required="true" requiredMessage="Informe o nome do usuario" message="fc">
+			    <f:validateLength minimum="1" />  
+			</p:inputText>
+			
+			<h:outputText value="Senha : "></h:outputText>
+			<p:password id="j_password" name="j_password" required="true" requiredMessage="Informe a senha">
+			    <f:validateLength minimum="1" />  
+			</p:password>
+			
+			<f:facet name="footer">
+				<p:commandButton value="Enviar" update="msgs" type="submit" name="submit" icon="ui-icon-check" style="margin:0" ajax="false" />
+			</f:facet> 
+			
+		</p:panelGrid>
+	</h:form>
+</h:body>
+
+</html>

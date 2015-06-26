@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:head>
+		<style>
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+		}
+		
+		.ui-datatable td:nth-child(6) {
+    		padding: 5;
+    		text-align: center;
+		}
+		</style>
+	</h:head>
+	<h:body>
+
+		<h:form>
+	 		
+	 		<p:panel id="panel" header="Carga de Documentos">
+	        
+	        <p:messages />
+	        
+			<h:panelGrid columns="6" cellpadding="5">
+				            
+	            <p:outputLabel value="Descricao" />
+	            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.descricao}"/>
+				<p:outputLabel value=""/>
+
+	            <p:outputLabel value="Numero do lote" />
+	            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.id}"/>
+				<p:outputLabel value=""/>
+				
+	            <p:outputLabel value="Data da Carga" />
+	            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.dataAlteracao}"/>
+				<p:outputLabel value=""/>
+
+	            <p:outputLabel value="Tamanho do lote" />
+	            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.tamanho}"/>
+				<p:outputLabel value=""/>
+
+	            <p:outputLabel value="Usuario" />
+	            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.usuarioAlteracao}"/>
+				<p:outputLabel value=""/>
+
+	            <p:outputLabel value="Situacao" />
+	            <p:outputLabel value="#{cargaArquivoBean.cargaArquivo.situacao}"/>
+				<p:outputLabel value=""/>
+	            
+	        </h:panelGrid>
+
+			<p:separator />
+			
+	        
+	    	</p:panel>    
+	    </h:form>
+	    	    	
+	</h:body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+    <h:form>
+
+        <p:panel id="panel" header="${msgs.incluirDocumentoHeader}">
+        
+			<p:messages/>
+
+	        <p:panelGrid id="panelAlterar" columns="3">
+	            <p:outputLabel for="codigoClienteDocumento" value="#{msgs.documentoCodigoCliente}" />
+	            <p:inputText id="codigoClienteDocumento" value="#{documentoBean.codigoCliente}" disabled="true"/>
+				<p:outputLabel value=""/>
+				
+	            <p:outputLabel value="#{msgs.documentoTipoDocumento}" />
+				<p:selectOneMenu value="#{documentoBean.documento.tipoDocumento}">
+					<f:selectItem itemLabel="SELECIONE" itemValue="" />
+					<f:selectItems value="#{documentoBean.listaTiposDocumentos}" var="tipo" itemLabel="#{tipo.nomeTipo}" itemValue="#{tipo.id}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value=""/>
+				
+	            <p:outputLabel for="tituloDocumento" value="#{msgs.documentoTitulo}" />
+	            <p:inputText id="tituloDocumento" value="#{documentoBean.documento.titulo}" required="true" requiredMessage="#{msgs.tituloDocumentoRequired}" />
+	            <p:message for="tituloDocumento" display="icon" />
+	 
+	            <p:outputLabel for="descricaoDocumento" value="#{msgs.documentoDescricao}" />
+	            <p:inputText id="descricaoDocumento" value="#{documentoBean.documento.descricao}" required="true" requiredMessage="#{msgs.descricaoDocumentoRequired}" />
+	            <p:message for="descricaoDocumento" display="icon" />
+	                
+	        </p:panelGrid>
+	        <p:commandButton value="Alterar" action="#{documentoBean.incluirDocumentoFim()}"
+                update=":formPrincipal:tabelaDocumentos" oncomplete="PF('dialogAlterar').hide()" />
+
+		</p:panel>
+        <br/>
+    </h:form>
+</h:body>
+</html>

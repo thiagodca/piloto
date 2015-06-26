@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/templates/template.xhtml">
+
+<ui:define name="content">
+
+	<h:head>
+		<style>
+			.ui-panelgrid .ui-panelgrid-cell {
+				font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+				font-size: small !important;
+				border: hidden !important;
+			}
+		</style>
+	</h:head>
+	<h:body>
+
+		<h:form id="formPesquisaCarga">
+	 		
+	 		<p:panel id="panel" header="Pesquisa Cargas">
+	 		
+	 		<p:panelGrid id="dadosCarga" cellpadding="5">
+	        
+	        <p:row>
+	        	<p:column colspan="3">
+	        		<p:messages />
+	        	</p:column>
+	        </p:row>
+
+	        <p:row>
+	        	<p:column>
+					<p:outputLabel value="Numero do lote" />
+	        	</p:column>
+	        	<p:column colspan="2">
+	        		<p:inputText value="#{pesquisaCargaBean.numeroLote}"/>
+	        	</p:column>
+	        </p:row>
+
+	        <p:row>
+	        	<p:column>
+					<p:outputLabel value="Descricao" />
+	        	</p:column>
+	        	<p:column colspan="2">
+	        		<p:inputText value="#{pesquisaCargaBean.descricao}"/>
+	        	</p:column>
+	        </p:row>
+
+	        <p:row>
+	        	<p:column>
+					<p:outputLabel value="Data da Carga" />
+	        	</p:column>
+	        	<p:column>
+	        		<p:inputText value="#{pesquisaCargaBean.dataCargaInicio}"/>
+	        	</p:column>
+	        	<p:column>
+	        		<p:inputText value="#{pesquisaCargaBean.dataCargaFim}"/>
+	        	</p:column>
+	        </p:row>
+
+	        <p:row>
+	        	<p:column>
+					<p:outputLabel value="Situacao" />
+	        	</p:column>
+	        	<p:column colspan="2">
+					<p:selectOneMenu id="selectSituacao" value="#{pesquisaCargaBean.situacao}">
+					   <f:selectItems value="#{pesquisaCargaBean.situacoes}"/>
+					</p:selectOneMenu>
+	        	</p:column>
+	        </p:row>
+
+	        <p:row rendered="#{loginBean.usuarioAdmin}">
+	        	<p:column>
+					<p:outputLabel value="Usuario" />
+	        	</p:column>
+	        	<p:column colspan="2">
+	        		<p:inputText value="#{pesquisaCargaBean.usuario}"/>
+	        	</p:column>
+	        </p:row>
+			
+	        <p:row>
+	        	<p:column colspan="3" style="text-align: center;">
+					<p:commandButton action="#{pesquisaCargaBean.pesquisar()}" value="Pesquisar" title="Pesquisar" icon="ui-icon-document" />
+				</p:column>
+			</p:row>		
+	    </p:panelGrid>
+	    
+	    </p:panel>
+	        
+	    </h:form>
+	    	
+	</h:body>
+
+</ui:define>
+</ui:composition>
+</html>
