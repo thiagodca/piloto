@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 import model.ArquivoTemporario;
 
 @Stateless
-public class ArquivoTemporarioDAO extends GenericDAO<ArquivoTemporario> {
+public class ArquivoTemporarioDAO extends GenericDAO<ArquivoTemporario>{
 
 	public ArquivoTemporarioDAO() {
 		super(ArquivoTemporario.class);
