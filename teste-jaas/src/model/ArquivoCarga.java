@@ -8,8 +8,9 @@ public class ArquivoCarga {
 		this.arquivo = arquivo;
 		
 		inicializar();
-		
 	}
+	
+	public ArquivoCarga(){}
 	
 	private String nome;
 	
@@ -34,7 +35,6 @@ public class ArquivoCarga {
 	private long cargaArquivoId;
 	
 	private void inicializar(){
-	     
 	   String filename = arquivo.getFileName();
 	   this.caminho = filename;
        this.nome = filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
@@ -119,5 +119,13 @@ public class ArquivoCarga {
 
 	public void setCargaArquivoId(long cargaArquivoId) {
 		this.cargaArquivoId = cargaArquivoId;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCpfCnpjCliente(String cpfCnpjCliente) {
+		this.cpfCnpjCliente = cpfCnpjCliente;
 	}	
 }

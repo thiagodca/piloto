@@ -1,23 +1,23 @@
 package validation;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
 import model.ArquivoTemporario;
-import facade.TipoDocumentoFacade;
+import model.TipoDocumento;
+import dao.TipoDocumentoDAO;
 
-public class ValidacaoArquivoTemporario extends Validator{
+@Stateless
+public class ValidacaoArquivoTemporario implements Validator<ArquivoTemporario>{
 
-	private ArquivoTemporario arquivoTemporario;
-	
 	@EJB
-	TipoDocumentoFacade tipoDocumentoFacade;
+	TipoDocumentoDAO tipoDocumentoDAO;
 	
-	public ValidacaoArquivoTemporario(ArquivoTemporario arquivoTemporario) {
-		this.arquivoTemporario = arquivoTemporario;
+	public ValidacaoArquivoTemporario(){
 	}
 
 	@Override
-	public void validate() throws Exception {
+	public void validate(ArquivoTemporario arquivoTemporario) throws Exception {
 
 		String msgErro = "";
 		
@@ -29,15 +29,15 @@ public class ValidacaoArquivoTemporario extends Validator{
 	    	if(!ValidacaoCliente.validarCPFCNPJ(cpfCnpj)){
 	    		msgErro = "CPF/CNPJ invalido " + cpfCnpj;
 	    	}
-	    	/*
+	    	
 	    	String codigoTipo = arquivoTemporario.getCodigoTipo();
 	    	
 	    	// Verificar se o tipo documento existe
-	    	TipoDocumento tipoDocumento = tipoDocumentoFacade.buscarPorCodigo(codigoTipo);
+	    	TipoDocumento tipoDocumento = tipoDocumentoDAO.buscar(codigoTipo);
 	    	if(tipoDocumento==null){
 	    		msgErro = "Tipo de Documento inexistente " + codigoTipo;
 	    	}
-	    	*/
+	    	
 		} catch (Throwable e) {
 			e.printStackTrace();
 			msgErro = "Erro interno = " + e.getMessage();

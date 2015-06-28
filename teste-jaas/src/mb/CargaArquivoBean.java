@@ -63,6 +63,10 @@ public class CargaArquivoBean{
 	
 	private List<UploadedFile> arquivosUpload;
 	
+	private String origem;
+	
+	private long idSelecionado;
+	
     /**
      * Construtor
      */
@@ -72,12 +76,15 @@ public class CargaArquivoBean{
     	System.out.println("cargaArquivo="+cargaArquivo);
     }
     
-    // Abrir a tela de carga a partir da pesquisa
+    // Abrir a tela de carga a partir da lista
     public void abrir(){
     	System.out.println(">> abrir()");
-    	System.out.println("cargaArquivoId="+cargaArquivoId);
-    	
-    	montaDadosTela();
+    	System.out.println("idSelecionado="+idSelecionado);
+
+    	if(origem!=null && origem.equals("listarCargasArquivo")){
+    		cargaArquivoId = idSelecionado;
+    		montaDadosTela();
+    	}
     }
     
     public void inicio(){
@@ -101,12 +108,15 @@ public class CargaArquivoBean{
     	if(arquivosUpload==null){
     		arquivosUpload = new ArrayList<UploadedFile>();
     	}
+    	System.out.println("ListaUpload: "+arquivosUpload.size());
     	arquivosUpload.add(arquivo);
     }
 
     public void upload(){
     	System.out.println(">> upload()");
     	System.out.println("ID:"+cargaArquivoId);
+    	
+    	System.out.println("ListaUpload: "+arquivosUpload.size());
     	
     	for(UploadedFile file : arquivosUpload){
     		cargaAutomaticaFacade.uploadArquivoCarga(file, cargaArquivoId);
@@ -142,13 +152,14 @@ public class CargaArquivoBean{
     	
     	try{
     		cargaAutomaticaFacade.gravarDocumentos(cargaArquivoId);
+    		
+        	finalizarCarga(cargaArquivoId);
+        
+        	sendInfoMessageToUser("Carga finalizada com sucesso");
+        	
     	} catch (Exception e) {
-    		sendErrorMessageToUser(e.getMessage());
+    		sendErrorMessageToUser("Erro ao finalizar o processo de carga. "+e.getMessage());
     	}
-    	
-    	finalizarCarga(cargaArquivoId);
-    	
-    	sendInfoMessageToUser("Carga finalizada com sucesso");
     	
     }
     
@@ -168,7 +179,9 @@ public class CargaArquivoBean{
         	umArquivo.setDescricao(arquivoTempErro.getDescricao());
 
         	cargaAutomaticaFacade.revalidarArquivoTemporario(umArquivo);
-        	
+
+            sendInfoMessageToUser("Arquivo atualizado com sucesso.");
+
         } catch (EJBException e) {
         	System.out.println("ERRO ao atualizar");
             sendErrorMessageToUser("Error. Check if the weight is above 0 or call the adm");
@@ -177,8 +190,6 @@ public class CargaArquivoBean{
         // recarrega as tabelas
         montaDadosTela();
         
-        sendInfoMessageToUser("Arquivo atualizado com sucesso.");
-
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('dialogAtualizarTemporario').hide();");
     }
@@ -193,6 +204,8 @@ public class CargaArquivoBean{
         	ArquivoTemporario umArquivo = arquivoTemporarioFacade.buscar(arquivoTempErro.getId());
 
             arquivoTemporarioFacade.deletar(umArquivo);
+
+            sendInfoMessageToUser("Documento excluido com sucesso.");
             
         } catch (EJBException e) {
             sendErrorMessageToUser("Error. Call the ADM");
@@ -202,8 +215,6 @@ public class CargaArquivoBean{
  
         montaDadosTela();
         
-        sendInfoMessageToUser("Documento excluido com sucesso.");
- 
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('dialogDeletarTemporario').hide();");
     }
@@ -297,6 +308,22 @@ public class CargaArquivoBean{
 
 	public void setArquivoTempErro(ArquivoTemporario arquivoTempErro) {
 		this.arquivoTempErro = arquivoTempErro;
+	}
+
+	public String getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+
+	public long getIdSelecionado() {
+		return idSelecionado;
+	}
+
+	public void setIdSelecionado(long idSelecionado) {
+		this.idSelecionado = idSelecionado;
 	}
 }
 

@@ -1,7 +1,7 @@
 package validation;
 
-public abstract class Validator {
+public interface Validator<T> {
 
-	public abstract void validate() throws Exception;
+	void validate(T o) throws Exception;
 	
 }

@@ -8,7 +8,7 @@
 	<h:form>
 		<p:messages/>
  
-	    <h3>#{msgs.atualizarUsuarioHeader}: #{usuarioBean.usuario.nome}</h3>
+	    <h3>#{msgs.atualizarUsuarioHeader}: #{usuarioBean.usuario.login}</h3>
 	    <h:inputHidden value="#{usuarioBean.usuario.login}" />
 	    <h:panelGrid columns="2" styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine" >
 	        <h:outputLabel for="usuarioNome" value="#{msgs.usuarioNome}" />

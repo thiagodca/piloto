@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import validation.ValidatorFactory;
 import model.Cliente;
 import dao.ClienteDAO;
 
@@ -55,7 +54,7 @@ public class ClienteFacadeImpl implements ClienteFacade{
 	
 	private void validar(Cliente cliente) throws Exception{
 		
-		ValidatorFactory.getInstance().getValidator(cliente).validate();
+		//ValidatorFactory.getInstance().getValidator(cliente).validate();
 		
 	}
 	

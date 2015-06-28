@@ -12,9 +12,22 @@
 
 	<h:head>
 		<style>
-		.ui-datatable {
+		
+		.ui-panel {
 			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
 			font-size: small !important;
+			border: hidden !important;
+		}
+		
+		.ui-panelgrid .ui-panelgrid-cell {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: small !important;
+			border: hidden !important;
+		}
+		
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: x-small !important;
 		}
 		
 		.ui-datatable td:nth-child(6) {
@@ -31,16 +44,22 @@
 	        
 	        <p:messages />
 	        
-	        <p:outputLabel for="codigoCliente" value="#{msgs.documentoCodigoCliente}" />
-	        <p:inputText id="codigoCliente" value="#{documentoBean.codigoCliente}" />
-	
-			<p:commandButton value="Listar" update="tabelaDocumentos" actionListener="#{documentoBean.obterListaDeDocumentos}" />
+	        <p:panelGrid columns="3">
+	        
+		        <p:outputLabel for="codigoCliente" value="#{msgs.documentoCodigoCliente}" />
+		        <p:inputText id="codigoCliente" value="#{documentoBean.codigoCliente}" />
+		
+				<p:commandButton value="Listar" update="tabelaDocumentos" actionListener="#{documentoBean.obterListaDeDocumentos}" />
 			
-			<p:separator />
-			
+			</p:panelGrid>
+			<br />
 	        <p:dataTable id="tabelaDocumentos" value="#{documentoBean.listaDeDocumentos}" var="documento"
 	        	 emptyMessage="Nenhum documento encontrado." >
 	
+				<p:column headerText="#{msgs.documentoCodigoCliente}">
+					#{documento.cliente.codigo}
+				</p:column>
+				
 	            <p:column headerText="#{msgs.documentoTipoDocumento}">
 	                #{documento.tipoDocumento.nomeTipo}
 	            </p:column>

@@ -11,11 +11,11 @@ import model.CargaArquivo;
 import model.Cliente;
 import model.Documento;
 import model.TipoDocumento;
+import negocio.IArquivoTemporarioBusiness;
 
 import org.primefaces.model.UploadedFile;
 
 import util.UtilData;
-import validation.ValidatorFactory;
 
 @Stateless
 public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
@@ -41,13 +41,16 @@ public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
     @EJB
     private CargaArquivoFacade cargaArquivoFacade;
     
+    @EJB
+    private IArquivoTemporarioBusiness arquivoTemporarioBusiness;
+
     @Override
     public void uploadArquivoCarga(UploadedFile arquivo, long cargaArquivoId) {
     	
     	ArquivoCarga arquivoCarga = new ArquivoCarga(arquivo);
 
     	// A carga inicial vai para uma pasta temporaria
-    	arquivoCarga.setPasta("TEMP/"+arquivoCarga.getCargaArquivoId());
+    	arquivoCarga.setPasta("TEMP/"+cargaArquivoId);
     	
     	String mensagemErro = "";
     	try{
@@ -58,7 +61,7 @@ public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
     		arquivoCarga.carregarParametros();
     		
     		// Validar os dados do arquivo
-    		ValidatorFactory.getInstance().getValidator(arquivoCarga).validate();
+    		//ValidatorFactory.getInstance().getValidator(arquivoCarga).validate();
     		
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -95,21 +98,7 @@ public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
 
     @Override
     public void revalidarArquivoTemporario(ArquivoTemporario arquivoTemporario) {
-   
-    	try{
-			// Validar os dados do arquivo
-			ValidatorFactory.getInstance().getValidator(arquivoTemporario).validate();
-
-			arquivoTemporario.setIndErro("N");
-			
-    	} catch(Exception e){
-    		e.printStackTrace();
-
-    		arquivoTemporario.setMsgErro("" + e.getMessage());
-    		arquivoTemporario.setIndErro("S");
-    	}
-
-    	arquivoTemporarioFacade.atualizar(arquivoTemporario);
+    	arquivoTemporarioBusiness.revalidarArquivoTemporario(arquivoTemporario);
     }
 	
 	@Override
@@ -117,14 +106,31 @@ public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
 		
 		CargaArquivo cargaArquivo = cargaArquivoFacade.buscarCargaArquivoPorId(cargaArquivoId);
 		
+		System.out.println("cargaArquivo.id()="+cargaArquivo.getId());
+		
 		List<ArquivoTemporario> arquivosTemporarios = cargaArquivo.getArquivoTemporario();
+		
+		if(arquivosTemporarios==null || arquivosTemporarios.size()==0){
+			arquivosTemporarios = arquivoTemporarioFacade.listarPorCarga(cargaArquivoId);
+		}
 		
 		for(ArquivoTemporario arquivoTemporario : arquivosTemporarios){
 
+			System.out.println("arquivoTemporario.getinderro()="+arquivoTemporario.getId()+" - "+arquivoTemporario.getIndErro());
+			
 			// Processa somente os arquivos OK
 			if(arquivoTemporario.getIndErro().equals("S")){
 				continue;
 			}
+
+			// Move da pasta TEMP para a pasta destino
+	    	ArquivoCarga arquivoCarga = new ArquivoCarga();
+
+	    	arquivoCarga.setNome(arquivoTemporario.getNome());
+	    	arquivoCarga.setCpfCnpjCliente(arquivoTemporario.getCpfCnpjCliente());
+	    	arquivoCarga.setPasta("TEMP/"+cargaArquivo.getId());
+
+	    	arquivoUploadFacade.moveArquivo(arquivoCarga);
 			
 	    	// Cadastra um novo cliente se nao existir
 	    	Cliente cliente = clienteFacade.buscarClientePorCPFCNPJ(arquivoTemporario.getCpfCnpjCliente());        	
@@ -142,13 +148,15 @@ public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
 	    	// Obtem o tipo de documento
 	    	TipoDocumento tipoDocumento = tipoDocumentoFacade.buscarPorCodigo(arquivoTemporario.getCodigoTipo());
 	    	
+	    	System.out.println("tipoDocumento="+tipoDocumento.getCodigo());
+	    	
 	    	// Cadastra o documento
 	    	Documento documento = new Documento();
 	    	documento.setCliente(cliente);
 	    	documento.setTipoDocumento(tipoDocumento);
 	    	documento.setDataInclusao(UtilData.getDataAtual());
 	    	documento.setTitulo(arquivoTemporario.getDescricao());
-	    	documento.setDescricao(arquivoTemporario.getDescricao());
+	    	documento.setDescricao("Upload Carga Automatica");
 
 	    	documento.setCargaArquivo(cargaArquivo);
 	    	
@@ -164,6 +172,7 @@ public class CargaAutomaticaFacadeImpl implements CargaAutomaticaFacade{
 			arquivoAnexoFacade.salvar(anexo);
 			
 			// Deletar arquivo temporario
+			arquivoTemporarioFacade.deletar(arquivoTemporario);
 			
 		}
 		

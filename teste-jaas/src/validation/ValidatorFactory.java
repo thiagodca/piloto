@@ -16,7 +16,7 @@ public class ValidatorFactory {
 	}
 	
 	public Validator getValidator(Object model){
-		
+		/*
 		if(model instanceof Cliente){
 			return new ValidacaoCliente((Cliente) model);
 		}
@@ -28,7 +28,7 @@ public class ValidatorFactory {
 		if(model instanceof ArquivoTemporario){
 			return new ValidacaoArquivoTemporario((ArquivoTemporario) model);
 		}
-
+*/
 		return null;
 	}
 	

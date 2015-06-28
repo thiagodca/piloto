@@ -91,7 +91,7 @@ public class CargaArquivoFacadeImpl implements CargaArquivoFacade{
 		CargaArquivo cargaArquivo = buscarCargaArquivoPorId(id);
 		
 		cargaArquivo.setDataAlteracao(UtilData.getDataAtual());
-		cargaArquivo.setSituacao(SituacaoCarga.PENDENTE);
+		cargaArquivo.setSituacao(SituacaoCarga.FINALIZADA);
 		cargaArquivo.setUsuarioAlteracao(usuario);
 	
 		atualizar(cargaArquivo);

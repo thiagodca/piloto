@@ -12,9 +12,15 @@
 
 	<h:head>
 		<style>
-		.ui-datatable {
+		.ui-panel {
 			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
 			font-size: small !important;
+			border: hidden !important;
+		}
+		
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: x-small !important;
 		}
 		
 		.ui-datatable td:nth-child(8) {
@@ -70,7 +76,7 @@
 		            <p:commandButton update="atualizarCliente" oncomplete="PF('dialogAtualizarCliente').show()" title="#{msgs.atualizar}" icon="ui-icon-pencil" rendered="#{loginBean.usuarioAdmin}" >
 		                <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
 		            </p:commandButton>
-		            <p:commandButton update="deletarCliente" oncomplete="PF('dialogDeletarCliente').show()" title="#{msgs.deletar}" icon="ui-icon-gear" rendered="#{loginBean.usuarioAdmin}" >
+		            <p:commandButton update="deletarCliente" oncomplete="PF('dialogDeletarCliente').show()" title="#{msgs.deletar}" icon="ui-icon-trash" rendered="#{loginBean.usuarioAdmin}" >
 		                <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{cliente}" />
 		            </p:commandButton>
 		            <h:inputHidden value="#{cliente.id}" />

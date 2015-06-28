@@ -3,21 +3,20 @@ package validation;
 import javax.ejb.EJB;
 
 import model.ArquivoCarga;
+import model.TipoDocumento;
 import facade.TipoDocumentoFacade;
 
-public class ValidacaoArquivoCarga extends Validator{
-
-	private ArquivoCarga arquivoCarga;
+public class ValidacaoArquivoCarga implements Validator<ArquivoCarga>{
 	
 	@EJB
 	TipoDocumentoFacade tipoDocumentoFacade;
 	
-	public ValidacaoArquivoCarga(ArquivoCarga arquivoCarga) {
-		this.arquivoCarga = arquivoCarga;
+	public ValidacaoArquivoCarga(){
+		
 	}
 
 	@Override
-	public void validate() throws Exception {
+	public void validate(ArquivoCarga arquivoCarga) throws Exception {
 
 		String msgErro = "";
 		
@@ -29,7 +28,7 @@ public class ValidacaoArquivoCarga extends Validator{
 	    	if(!ValidacaoCliente.validarCPFCNPJ(cpfCnpj)){
 	    		msgErro = "CPF/CNPJ invalido " + cpfCnpj;
 	    	}
-	    	/*
+	    	
 	    	String codigoTipo = arquivoCarga.getCodigoTipo();
 	    	
 	    	// Verificar se o tipo documento existe
@@ -37,7 +36,7 @@ public class ValidacaoArquivoCarga extends Validator{
 	    	if(tipoDocumento==null){
 	    		msgErro = "Tipo de Documento inexistente " + codigoTipo;
 	    	}
-	    	*/
+	    	
 		} catch (Throwable e) {
 			e.printStackTrace();
 			msgErro = "Erro interno = " + e.getMessage();

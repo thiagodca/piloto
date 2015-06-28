@@ -3,7 +3,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -24,7 +26,7 @@ public class CargaArquivo implements Serializable{
 
 	private String descricao;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "cargaArquivo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ArquivoTemporario> arquivoTemporario;
 	
 	private long tamanho;

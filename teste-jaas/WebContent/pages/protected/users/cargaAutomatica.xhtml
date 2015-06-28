@@ -77,7 +77,8 @@
 		<h:form id="formCargaArquivo">
 	 		
 	 		<f:metadata>
-    			<f:viewParam name="cargaArquivoId" value="#{cargaArquivoBean.cargaArquivoId}" />
+    			<f:viewParam name="idSelecionado" value="#{cargaArquivoBean.idSelecionado}" />
+    			<f:viewParam name="origem" value="#{cargaArquivoBean.origem}" />
     			<f:event type="preRenderView" listener="#{cargaArquivoBean.abrir}"/>
 			</f:metadata>
 	 		
@@ -85,7 +86,7 @@
 	        
 		        <p:messages />
 		        
-		        <h:panelGrid columns="3" cellpadding="5"  rendered="#{!cargaArquivoBean.cargaIniciada}">
+		        <h:panelGrid columns="3" cellpadding="5" rendered="#{!cargaArquivoBean.cargaIniciada}">
 	
 		    		<p:fileUpload value="#{cargaArquivoBean.arquivo}" mode="advanced" label="Selecionar" 
 		    			cancelLabel="Cancelar" uploadLabel="Enviar" multiple="true"
@@ -182,7 +183,7 @@
 		    	
 		    	<br />
 		    	
-		    	<p:commandButton update="@form" action="#{cargaArquivoBean.gravaDocumentos}" icon="ui-icon-plus" value="Finalizar"
+		    	<p:commandButton update="@form" action="#{cargaArquivoBean.gravaDocumentos}" icon="ui-icon-disk" value="Finalizar"
 		    		 rendered="#{cargaArquivoBean.cargaIniciada}" />
 
 	    	</p:panel>	    	

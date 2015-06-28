@@ -46,14 +46,17 @@ public class PesquisaCargaBean extends mb.ManagedBean{
 
     public String pesquisar(){
     	System.out.println(">> pesquisar()");
+    	
+    	String filtroDescricao = (!descricao.isEmpty()?descricao:null);
   	
+    	String filtroUsuario = null;
     	if(usuario==null || usuario.isEmpty()){
     		if(!isUsuarioAdmin()){
-    			usuario = getUsuarioLogado().getLogin();
+    			filtroUsuario = getUsuarioLogado().getLogin();
     		}
     	}
     	
-    	listaCargas = cargaArquivoFacade.filtrar(numeroLote, descricao, situacao, dataCargaInicio, dataCargaFim, usuario);
+    	listaCargas = cargaArquivoFacade.filtrar(numeroLote, filtroDescricao, situacao, dataCargaInicio, dataCargaFim, filtroUsuario);
     	
     	return "listarCargasArquivo";
     }

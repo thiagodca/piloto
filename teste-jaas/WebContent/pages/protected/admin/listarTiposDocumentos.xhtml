@@ -12,9 +12,16 @@
 
 	<h:head>
 		<style>
-		.ui-datatable {
+		
+		.ui-panel {
 			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
 			font-size: small !important;
+			border: hidden !important;
+		}
+		
+		.ui-datatable {
+			font-family: Verdana, "Helvetica Neue", Arial, sans-serif !important;
+			font-size: x-small !important;
 		}
 		
 		.ui-datatable td:nth-child(3) {
@@ -33,6 +40,10 @@
 	        <p:dataTable id="tabelaTiposDocumentos" value="#{tipoDocumentoBean.listaTiposDocumentos}" var="tipoDocumento" 
 	        	emptyMessage="Nenhum tipo de documento encontrado.">
 	
+	            <p:column headerText="Codigo">
+	                #{tipoDocumento.codigo}
+	            </p:column>
+
 	            <p:column headerText="#{msgs.tipoDocumentoNome}">
 	                #{tipoDocumento.nomeTipo}
 	            </p:column>

@@ -4,12 +4,9 @@ import model.Cliente;
 import br.com.caelum.stella.validation.CNPJValidator;
 import br.com.caelum.stella.validation.CPFValidator;
 
-public class ValidacaoCliente extends Validator{
+public class ValidacaoCliente implements Validator<Cliente>{
 
-	private Cliente cliente;
-	
-	public ValidacaoCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public ValidacaoCliente() {
 	}
 
 	public static boolean validarCPFCNPJ(String cpfCnpj){
@@ -29,8 +26,8 @@ public class ValidacaoCliente extends Validator{
 	}
 
 	@Override
-	public void validate() throws Exception {
-
+	public void validate(Cliente cliente) throws Exception {
+		
 		if(!validarCPFCNPJ(cliente.getCpfCnpj())){
 			throw new Exception("CPF/CNPJ invalidos.");
 		}

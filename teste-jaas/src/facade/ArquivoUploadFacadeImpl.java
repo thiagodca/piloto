@@ -12,6 +12,7 @@ import model.ArquivoUpload;
 import model.Parametro;
 import model.TipoParametro;
 
+import org.apache.commons.io.FileUtils;
 import org.primefaces.model.UploadedFile;
 
 import dao.ParametroDAO;
@@ -36,11 +37,15 @@ public class ArquivoUploadFacadeImpl implements ArquivoUploadFacade{
     	String fileName = arquivoUpload.getNome();
     	String diretorio = buscarDiretorio();
     	String pasta = arquivoUpload.getPasta();
-    	
+    	    	
     	String path = diretorio + pasta + "/" + fileName;
     	    	
-    	InputStream inputStream = file.getInputstream();          
-    	FileOutputStream outputStream = new FileOutputStream(path);
+    	InputStream inputStream = file.getInputstream();
+    	
+    	File newFile = new File(diretorio + pasta + "/" + fileName);
+    	FileOutputStream outputStream = FileUtils.openOutputStream(newFile);
+
+    	//new FileOutputStream(path);
          
     	byte[] buffer = new byte[4096];          
     	int bytesRead = 0;  
@@ -62,13 +67,21 @@ public class ArquivoUploadFacadeImpl implements ArquivoUploadFacade{
 
 		String fileName = arquivoCarga.getNome();
 		
-		String pathFrom = buscarDiretorio() + arquivoCarga.getPasta() + "/" + fileName;
-		String pathTo 	= buscarDiretorio() + arquivoCarga.getCpfCnpjCliente() + "/" + fileName;
-		
-		File aFile = new File(pathFrom);
-		 
-		if(!aFile.renameTo(new File(pathTo))){
-			 throw new Exception("Erro ao mover arquivo " + fileName);
+		try{
+			String pathFrom = buscarDiretorio() + arquivoCarga.getPasta() + "/" + fileName;
+			String pathTo 	= buscarDiretorio() + arquivoCarga.getCpfCnpjCliente() + "/";
+			
+			System.out.println("Movendo arquivo de: "+pathFrom);
+			System.out.println("para: "+pathTo);
+			
+			File fileFrom = new File(pathFrom);
+			File fileTo = new File(pathTo);
+			
+			FileUtils.moveFileToDirectory(fileFrom, fileTo, true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Erro ao mover arquivo " + fileName, e.getCause());
 		}
 				 
 	}
