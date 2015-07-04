@@ -15,14 +15,13 @@ import model.ArquivoAnexo;
 import model.ArquivoUpload;
 import model.Cliente;
 import model.Documento;
+import model.PesquisaDocumentoVO;
 import model.TipoDocumento;
 import model.Usuario;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 
 import util.UtilData;
 import facade.ArquivoAnexoFacade;
@@ -50,6 +49,12 @@ public class DocumentoBean implements Serializable{
     @EJB
     private ClienteFacade clienteFacade;
 
+    @EJB
+    private ArquivoAnexoFacade arquivoAnexoFacade;
+
+    @EJB
+    private ArquivoUploadFacade arquivoUploadFacade;
+
     private Documento documento;
     
     private String codigoCliente;
@@ -58,19 +63,17 @@ public class DocumentoBean implements Serializable{
     
     private List<TipoDocumento> listaTiposDocumentos;
     
-    @EJB
-    private ArquivoAnexoFacade arquivoAnexoFacade;
-
-    @EJB
-    private ArquivoUploadFacade arquivoUploadFacade;
-
     private ArquivoAnexo arquivoAnexo;
     
     private List<ArquivoAnexo> listaArquivosAnexos;
 
     private UploadedFile arquivo;
     
-    /**
+	private PesquisaDocumentoVO pesquisaDocumentoVO;
+
+	private boolean exibeLista;
+	
+	/**
      * Construtor
      */
     public DocumentoBean(){
@@ -78,13 +81,14 @@ public class DocumentoBean implements Serializable{
     }
 
     @PostConstruct
-    public void init(){
-    	System.out.println(">> init()");
+    public void iniciar(){
+    	if(pesquisaDocumentoVO == null){
+    		pesquisaDocumentoVO = new PesquisaDocumentoVO();
+    	}
     	
-    	obterListaDeDocumentos();
-    	
-    	listaTiposDocumentos = tipoDocumentoFacade.listarTodos();
-    	
+    	if(listaTiposDocumentos==null){
+    		listaTiposDocumentos = tipoDocumentoFacade.listarTodos();
+    	}
     }
     
     /**
@@ -148,9 +152,6 @@ public class DocumentoBean implements Serializable{
      */
     public void incluirDocumentoInicio(){
     	System.out.println(">> incluirDocumentoInicio()");
-    	//codigoCliente = documento.getCliente().getCodigo();
-    	System.out.println("codigoCliente="+codigoCliente);
-    	//documento = new Documento();        
     }
     
     /**
@@ -253,6 +254,41 @@ public class DocumentoBean implements Serializable{
 		return arquivoAnexo;
 	}
 
+    public void pesquisar(){
+    	System.out.println(">> pesquisar()");
+    	
+    	try{
+    	
+	    	String filtroTitulo = (!pesquisaDocumentoVO.getTitulo().isEmpty()?pesquisaDocumentoVO.getTitulo():null);
+	    	
+	    	String filtroDescricao = (!pesquisaDocumentoVO.getDescricao().isEmpty()?pesquisaDocumentoVO.getDescricao():null);
+	
+	    	String filtroCodigoCliente = (!pesquisaDocumentoVO.getCodigoCliente().isEmpty()?pesquisaDocumentoVO.getCodigoCliente():null);
+	    	
+	    	String filtroCpfCnpjCliente = (!pesquisaDocumentoVO.getCpfCnpjCliente().isEmpty()?pesquisaDocumentoVO.getCpfCnpjCliente():null);
+	    	
+	    	String filtroNomeCliente = (!pesquisaDocumentoVO.getNomeCliente().isEmpty()?pesquisaDocumentoVO.getNomeCliente():null);
+	
+	    	String filtroUsuario = (!pesquisaDocumentoVO.getUsuario().isEmpty()?pesquisaDocumentoVO.getUsuario():null);;
+		
+	    	listaDeDocumentos = documentoFacade.filtrar(filtroTitulo, filtroDescricao, filtroCodigoCliente, filtroCpfCnpjCliente, filtroNomeCliente,
+	    			null, pesquisaDocumentoVO.getDataDocumentoInicio(), pesquisaDocumentoVO.getDataDocumentoFim(), filtroUsuario);
+	    	
+	    	System.out.println("Tamanho="+listaDeDocumentos.size());
+	    	
+	    	if(listaDeDocumentos.size()>0){
+	    		exibeLista = true;
+	    	}
+    	
+        } catch (EJBException e) {
+            sendErrorMessageToUser("Erro ao pesquisar documentos "+e.getMessage());
+ 
+        }       
+    	
+    	//listaDeDocumentos = documentoFacade.filtrar(titulo, descricao, codigoCliente, cpfCnpjCliente, nomeCliente, 
+    	//		null, dataDocumentoInicio, dataDocumentoFim, usuario);
+    }
+
     
     /**
      * Carrega uma lista de documentos. A lista eh filtrada por cliente, se houver um informado
@@ -274,8 +310,6 @@ public class DocumentoBean implements Serializable{
      */
     public String listarDocumentos(){
     	System.out.println(">> listarDocumentos()");
-    	
-    	obterListaDeDocumentos();
     	
         return LISTAR_DOCUMENTOS;
     }
@@ -351,6 +385,22 @@ public class DocumentoBean implements Serializable{
 
 	public void setArquivo(UploadedFile arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public PesquisaDocumentoVO getPesquisaDocumentoVO() {
+		return pesquisaDocumentoVO;
+	}
+
+	public void setPesquisaDocumentoVO(PesquisaDocumentoVO pesquisaDocumentoVO) {
+		this.pesquisaDocumentoVO = pesquisaDocumentoVO;
+	}
+
+	public boolean isExibeLista() {
+		return exibeLista;
+	}
+
+	public void setExibeLista(boolean exibeLista) {
+		this.exibeLista = exibeLista;
 	}
 	
 }

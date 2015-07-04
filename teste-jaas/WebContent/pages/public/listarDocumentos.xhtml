@@ -39,22 +39,100 @@
 	<h:body>
 
 		<h:form id="formPrincipal">
-	 		
+
 	 		<p:panel id="panel" header="Documentos">
 	        
 	        <p:messages />
 	        
-	        <p:panelGrid columns="3">
-	        
-		        <p:outputLabel for="codigoCliente" value="#{msgs.documentoCodigoCliente}" />
-		        <p:inputText id="codigoCliente" value="#{documentoBean.codigoCliente}" />
-		
-				<p:commandButton value="Listar" update="tabelaDocumentos" actionListener="#{documentoBean.obterListaDeDocumentos}" />
-			
-			</p:panelGrid>
-			<br />
+		 		<p:panelGrid id="dadosDocumento" cellpadding="5" rendered="#{!documentoBean.exibeLista}">
+		        
+		        <p:row>
+		        	<p:column colspan="3">
+		        		<p:messages />
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row>
+		        	<p:column>
+						<p:outputLabel value="Titulo" />
+		        	</p:column>
+		        	<p:column colspan="2">
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.titulo}"/>
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row>
+		        	<p:column>
+						<p:outputLabel value="Descricao" />
+		        	</p:column>
+		        	<p:column colspan="2">
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.descricao}"/>
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row>
+		        	<p:column>
+						<p:outputLabel value="Codigo do Cliente" />
+		        	</p:column>
+		        	<p:column colspan="2">
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.codigoCliente}"/>
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row>
+		        	<p:column>
+						<p:outputLabel value="CPF/CNPJ do Cliente" />
+		        	</p:column>
+		        	<p:column colspan="2">
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.cpfCnpjCliente}"/>
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row>
+		        	<p:column>
+						<p:outputLabel value="Nome do Cliente" />
+		        	</p:column>
+		        	<p:column colspan="2">
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.nomeCliente}"/>
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row>
+		        	<p:column>
+						<p:outputLabel value="Data" />
+		        	</p:column>
+		        	<p:column>
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.dataDocumentoInicio}"/>
+		        	</p:column>
+		        	<p:column>
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.dataDocumentoFim}"/>
+		        	</p:column>
+		        </p:row>
+	
+		        <p:row rendered="#{loginBean.usuarioAdmin}">
+		        	<p:column>
+						<p:outputLabel value="Usuario" />
+		        	</p:column>
+		        	<p:column colspan="2">
+		        		<p:inputText value="#{documentoBean.pesquisaDocumentoVO.usuario}"/>
+		        		
+		        	</p:column>
+		        </p:row>
+				
+		        <p:row>
+		        	<p:column colspan="3" style="text-align: center;">
+		        	
+		        		<p:commandButton value="Pesquisar" action="#{documentoBean.pesquisar}" update="@form">
+		        			<f:setPropertyActionListener value="#{documentoBean.pesquisaDocumentoVO}" target="#{documentoBean.pesquisaDocumentoVO}"/>
+		        		</p:commandButton>
+		        		
+					</p:column>
+				</p:row>		
+		    </p:panelGrid>
+
+
 	        <p:dataTable id="tabelaDocumentos" value="#{documentoBean.listaDeDocumentos}" var="documento"
-	        	 emptyMessage="Nenhum documento encontrado." >
+	        	 emptyMessage="Nenhum documento encontrado." rendered="#{documentoBean.exibeLista}" >
 	
 				<p:column headerText="#{msgs.documentoCodigoCliente}">
 					#{documento.cliente.codigo}
